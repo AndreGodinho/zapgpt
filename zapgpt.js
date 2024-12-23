@@ -25,7 +25,7 @@ const wwebVersion = '2.3000.1019060436-alpha';
 
 
 //Kit com os comandos otimizados para nuvem Ubuntu Linux (créditos Pedrinho da Nasa Comunidade ZDG)
-const client = new Client({
+const clientConectaWhatsApp = new Client({
   authStrategy: new LocalAuth({ clientId: sessao }),
   puppeteer: {
     headless: true,
@@ -196,18 +196,18 @@ async function runZAPGPT(chathistory) {
 }
 
 //Leitura do QRCode
-client.on('qr', qr => {
+clientConectaWhatsApp.on('qr', qr => {
   console.log('QRCode recebido, escaneie o código abaixo.');
   qrcode.generate(qr, {small: true});
 });
 
 //Resposta de sucesso
-client.on('ready', () => {
+clientConectaWhatsApp.on('ready', () => {
   console.log('Tudo certo! ZapGPT conectado.');
 });
 
 //Inicializa o servidor
-client.initialize();
+clientConectaWhatsApp.initialize();
 
 const delay = async (ms) => {
   await setTimeoutPromise(ms);
@@ -368,7 +368,7 @@ function readMap(numeroId) {
   return objeto;
 }
 
-client.on('message', async msg => {
+clientConectaWhatsApp.on('message', async msg => {
     
     // msg.body !== null para ativar com qualquer coisa
     if (!existsDB(msg.from) && msg.body.toLowerCase() === "falar com o poeta" && msg.from.endsWith('@c.us') && !msg.hasMedia) {
@@ -397,7 +397,7 @@ client.on('message', async msg => {
             await chat.sendSeen();
             await chat.sendStateTyping();
             await delay(10000); // Mudado aqui 3000
-            await client.sendMessage(msg.from, `${readZAPGPT(msg.from).content}`);
+            await clientConectaWhatsApp.sendMessage(msg.from, `${readZAPGPT(msg.from).content}`);
             updateFlow(msg.from, 'stepGPT');
             updateInteract(msg.from, 'done');          
         }
@@ -443,7 +443,7 @@ function extrairContatos(leadsTopo, leadsFundo, quantidade) {
 }
 
 async function obterUltimaMensagem(contato) {
-  const chat = await client.getChatById(contato);
+  const chat = await clientConectaWhatsApp.getChatById(contato);
   const mensagens = await chat.fetchMessages({ limit: 1 });
 
   if (mensagens.length > 0) {
@@ -454,11 +454,11 @@ async function obterUltimaMensagem(contato) {
   return "Nenhuma mensagem encontrada";
 }
 
-client.on('message_create', async (msg) => {
+clientConectaWhatsApp.on('message_create', async (msg) => {
 
     //Instruções da Central de Controle
     if (msg.fromMe && msg.body.startsWith('!help') && msg.to === msg.from) {    
-      await client.sendMessage(msg.from, `*Sistema de Controle ZAPGPT v1.0*\n\nFormato do *contato*: xxyyyyyyyyy\n\n*Atendimento Humano*\nMétodo Direto: "Ativar humano"\nMétodo Indireto: "!humano xxyyyyyyyyy"\n\n*Adicionar Lead a Base*\nMétodo Direto: "Olá, tudo bom?"\nMétodo Indireto: "!start xxyyyyyyyyy"`);
+      await clientConectaWhatsApp.sendMessage(msg.from, `*Sistema de Controle ZAPGPT v1.0*\n\nFormato do *contato*: xxyyyyyyyyy\n\n*Atendimento Humano*\nMétodo Direto: "Ativar humano"\nMétodo Indireto: "!humano xxyyyyyyyyy"\n\n*Adicionar Lead a Base*\nMétodo Direto: "Olá, tudo bom?"\nMétodo Indireto: "!start xxyyyyyyyyy"`);
     }
   
     //Deletar um contato da Base de Dados (Atendimento Humano)
@@ -466,14 +466,14 @@ client.on('message_create', async (msg) => {
       let contato = formatarContato(msg.body,'!humano ');
       if(existsDB(contato)){
       deleteObject(contato);}
-      await client.sendMessage(msg.from, `Deletei da Base de Dados o numero: ${contato}`);
+      await clientConectaWhatsApp.sendMessage(msg.from, `Deletei da Base de Dados o numero: ${contato}`);
     }
     
     //Deletar um contato da Base de Dados Método Direto (Atendimento Humano)
     if (msg.fromMe && msg.body === 'Ativar humano' && msg.to !== msg.from) {
       if(existsDB(msg.to)){
         deleteObject(msg.to);}
-        await client.sendMessage(msg.from, `Deletei da Base de Dados o numero: ${msg.to}`);    
+        await clientConectaWhatsApp.sendMessage(msg.from, `Deletei da Base de Dados o numero: ${msg.to}`);    
     }
   
     //Adicionar um contato na base de dados (Método Indireto)
@@ -483,14 +483,14 @@ client.on('message_create', async (msg) => {
       deleteObject(contato);}
       addObject(contato, 'stepGPT', 'id_temp', 'done', [], null, null, 200);
 
-      await client.sendMessage(msg.from, `Adiconei ao GPT: ${contato}`);
+      await clientConectaWhatsApp.sendMessage(msg.from, `Adiconei ao GPT: ${contato}`);
     }
   
     //Adicionar um contato na base de dados (Método Direto)
     if (msg.fromMe && msg.body === "Olá, tudo bom?" && msg.to !== msg.from) {
       if(!existsDB(msg.to)){
       addObject(msg.to, 'stepGPT', 'id_temp', 'done', [], null, null, 200);
-      await client.sendMessage(msg.from, `Adicionei ao GPT pelo método direto: ${msg.to}`);
+      await clientConectaWhatsApp.sendMessage(msg.from, `Adicionei ao GPT pelo método direto: ${msg.to}`);
       }
     }        
   
