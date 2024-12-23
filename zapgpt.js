@@ -1,4 +1,5 @@
 // Invocamos o leitor de qr code
+console.log('ZapGPT v1.0 - Inicializando...');
 const qrcode = require('qrcode-terminal');
 const { Client, Buttons, List, MessageMedia, LocalAuth } = require('whatsapp-web.js');
 const fs = require('fs');
@@ -20,26 +21,8 @@ const DATABASE_FILE = 'zapgptdb.json'; //Banco de dados da sua IA
 const sessao = 'zapgpt';
 
 // Final das variáveis do seu modelo
-const wwebVersion = '2.2407.3';
-/* const client = new Client({
-  authStrategy: new LocalAuth({ clientId: sessao }),
-  puppeteer: {
-    headless: true,
-    //CAMINHO DO CHROME PARA WINDOWS (COLOQUE O SEU PROPRIO CAMINHO DO CHROME AQUI)
-    executablePath: 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
-    //===================================================================================
-    // CAMINHO DO CHROME PARA MAC (REMOVER O COMENTÁRIO ABAIXO)
-    //executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-    //===================================================================================
-    // CAMINHO DO CHROME PARA LINUX (REMOVER O COMENTÁRIO ABAIXO)
-    //executablePath: '/usr/bin/google-chrome-stable',
-    //===================================================================================    
-  },
-  webVersionCache: {
-      type: 'remote',
-      remotePath: `https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/${wwebVersion}.html`,
-  }
-}); */
+const wwebVersion = '2.3000.1019060436-alpha';
+
 
 //Kit com os comandos otimizados para nuvem Ubuntu Linux (créditos Pedrinho da Nasa Comunidade ZDG)
 const client = new Client({
@@ -53,7 +36,7 @@ const client = new Client({
     //executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
     //===================================================================================
     // CAMINHO DO CHROME PARA LINUX (REMOVER O COMENTÁRIO ABAIXO)
-    // executablePath: '/usr/bin/google-chrome-stable',
+    executablePath: '/usr/bin/google-chrome-stable',
     //===================================================================================
     args: [
       '--no-sandbox', //Necessário para sistemas Linux
@@ -146,7 +129,7 @@ function createFolderIfNotExists(folderPath) {
       fs.mkdirSync(folderPath, { recursive: true });
       console.log(`Pasta criada: ${folderPath}`);
   } else {
-      console.log(`Pasta já existe: ${folderPath}`);
+      // console.log(`Pasta já existe: ${folderPath}`);
   }
 }
 
@@ -214,6 +197,7 @@ async function runZAPGPT(chathistory) {
 
 //Leitura do QRCode
 client.on('qr', qr => {
+  console.log('QRCode recebido, escaneie o código abaixo.');
   qrcode.generate(qr, {small: true});
 });
 
@@ -412,7 +396,7 @@ client.on('message', async msg => {
             const chat = await msg.getChat();
             await chat.sendSeen();
             await chat.sendStateTyping();
-            await delay(3000);
+            await delay(10000); // Mudado aqui 3000
             await client.sendMessage(msg.from, `${readZAPGPT(msg.from).content}`);
             updateFlow(msg.from, 'stepGPT');
             updateInteract(msg.from, 'done');          
