@@ -1,0 +1,92 @@
+Link da aula 02:
+https://platform.openai.com/docs/api-reference/
+Link da aula 03:
+https://openai.com/pricing
+https://platform.openai.com/docs/guides/rate-limits?context=tier-free
+https://platform.openai.com/docs/guides/error-codes/api-errors
+https://community.openai.com/
+Link da aula 04:
+https://openai.com/
+Passo a passo rápido - ZapGPT no Ubuntu Linux
+Abra conta na Digital Ocean e pegue 2 meses de gratuidade com 200USD de crédito:
+https://m.do.co/c/4c3958677512
+Nuvem: 7USD/mes
+Create > Droplets > Premium AMD 7USD/mês > setar senha > setar nome da VPS > Create
+Droplet
+Abrir o droplet criado > acess > Launch Droplet Console
+Instalando tudo:
+=============== Inicie Copia
+
+sudo apt update
+sudo apt upgrade -y
+sudo apt install -y nodejs npm
+node -v
+sudo apt install git curl
+sudo apt install gdebi
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo gdebi google-chrome-stable_current_amd64.deb
+sudo apt-get -f install
+git clone https://github.com/AndreGodinho/zapgpt.git
+cd zapgpt
+mkdir audiobruto
+mkdir audioliquido
+npm install
+npm run install-deps
+npm run install-ffmpeg
+npm install -g pm2 --save-dev
+npm install puppeteer
+npm install whatsapp-web.js
+npm install qrcode-terminal
+
+==================== Final Cópia
+nano zapgpt.js
+#editar para habilitar cliente Ubuntu
+Para editar qualquer arquivo:
+ctrl + s ; crtl + x
+nano .env
+Escrevar a sua chave da Openai:
+OPENAI_API_KEY=ssssssyyyyyysssssllll7777778888899993333
+ctrl + s ; crtl + x
+pm2 start zapgpt.js
+pm2 logs zapgpt
+#### Faça a leitura do qrcode
+Para voltar ao terminal
+ctrl + c
+pm2 list
+Para deletar a instância:
+pm2 delete zapgpt.js
+Para atualizar:
+git pull
+Passo a passo rápido - ZapGPT no Windows
+Abrir uma conta na OpenAI:
+https://platform.openai.com/
+
+Baixar Git:
+https://git-scm.com/download/win
+
+Baixar VSCode (Windows 10 e 11):
+https://code.visualstudio.com/download
+
+Baixar VSCode (Windows Server 2012 - Nuvem Alibaba do Guia Fantástico):
+https://code.visualstudio.com/updates/v1_76
+
+Baixar node.js:
+https://nodejs.org/en
+
+Instalar os programas
+Abrir o VSCode e baixar o git do ZapGPT:
+
+https://github.com/JohnnyLove777/zapgpt.git
+
+Acessar a pasta no VSCode
+Crie o .env com a sua API Key da Openai
+
+OPENAI_API_KEY=sua_api_key_aqui
+
+Crie duas pastas audiobruto e audioliquido
+
+Instalar dependencias:
+npm install
+
+Rodar o zapgpt:
+node zapgpt.js

@@ -30,13 +30,13 @@ const clientConectaWhatsApp = new Client({
   puppeteer: {
     headless: true,
     //CAMINHO DO CHROME PARA WINDOWS (REMOVER O COMENTÁRIO ABAIXO)
-    //executablePath: 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
+    executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
     //===================================================================================
     // CAMINHO DO CHROME PARA MAC (REMOVER O COMENTÁRIO ABAIXO)
     //executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
     //===================================================================================
     // CAMINHO DO CHROME PARA LINUX (REMOVER O COMENTÁRIO ABAIXO)
-    executablePath: '/usr/bin/google-chrome-stable',
+    //executablePath: '/usr/bin/google-chrome-stable',
     //===================================================================================
     args: [
       '--no-sandbox', //Necessário para sistemas Linux
@@ -45,28 +45,30 @@ const clientConectaWhatsApp = new Client({
       '--disable-accelerated-2d-canvas',
       '--no-first-run',
       '--no-zygote',
-      '--single-process', // <- Este não funciona no Windows, apague caso suba numa máquina Windows
+      // '--single-process', // <- Este não funciona no Windows, apague caso suba numa máquina Windows
       '--disable-gpu'
     ]
   },
   webVersionCache: {
-      type: 'remote',
-      remotePath: `https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/${wwebVersion}.html`,
-  }
+    type: 'remote',
+    remotePath: `https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/${wwebVersion}.html`,
+  },
+  logLevel: 'debug' // Adicione isso para habilitar logs detalhados
 });
 
 const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY // This is also the default, can be omitted
-  });
+  apiKey: process.env.OPENAI_API_KEY // This is also the default, can be omitted
+});
+
 
 //Mecanismo para reconhecimento de audio
 
-async function runAudio(arquivo) {  
+async function runAudio(arquivo) {
   const transcript = await openai.audio.transcriptions.create({
     model: 'whisper-1',
     file: fs.createReadStream(arquivo),
-  });  
-  return {message: transcript.text};
+  });
+  return { message: transcript.text };
 
 }
 
@@ -126,10 +128,10 @@ async function processMessage(msg) {
 
 function createFolderIfNotExists(folderPath) {
   if (!fs.existsSync(folderPath)) {
-      fs.mkdirSync(folderPath, { recursive: true });
-      console.log(`Pasta criada: ${folderPath}`);
+    fs.mkdirSync(folderPath, { recursive: true });
+    console.log(`Pasta criada: ${folderPath}`);
   } else {
-      // console.log(`Pasta já existe: ${folderPath}`);
+    // console.log(`Pasta já existe: ${folderPath}`);
   }
 }
 
@@ -145,39 +147,39 @@ createFolderIfNotExists(audioLiquidoPath);
 
 //Funções de processamento OpenAI
 
-function brokerMaster(requestFunction, msg , ...args) {
+function brokerMaster(requestFunction, msg, ...args) {
   const backoffDelay = 1000;
   const maxRetries = 10;
 
   return new Promise((resolve, reject) => {
-      const makeRequest = (retryCount, chatHistory) => {
-          requestFunction(...args)
-              .then((response) => {
-                  // Verifica se o finish_reason é 'length'
-                  if (response.finishReason === 'length' && requestFunction === runZAPGPT) {
-                      chatHistory = readChatHistory(msg.from); // args[0].from é um exemplo
+    const makeRequest = (retryCount, chatHistory) => {
+      requestFunction(...args)
+        .then((response) => {
+          // Verifica se o finish_reason é 'length'
+          if (response.finishReason === 'length' && requestFunction === runZAPGPT) {
+            chatHistory = readChatHistory(msg.from); // args[0].from é um exemplo
 
-                      chatHistory.splice(1, 2); // Remove as primeiras interações
+            chatHistory.splice(1, 2); // Remove as primeiras interações
 
-                      updateChatHistory(msg.from, chatHistory);
-                  }
+            updateChatHistory(msg.from, chatHistory);
+          }
 
-                  resolve(response.message); // Agora resolve somente a mensagem
-              })
-              .catch((error) => {
-                  if (retryCount === maxRetries) {
-                      reject(error);
-                      return;
-                  }
+          resolve(response.message); // Agora resolve somente a mensagem
+        })
+        .catch((error) => {
+          if (retryCount === maxRetries) {
+            reject(error);
+            return;
+          }
 
-                  const delay = backoffDelay * Math.pow(2, retryCount);
-                  console.log(`Tentativa ${retryCount + 1} falhou. Tentando novamente em ${delay}ms...`);
-                  console.log(error);
-                  setTimeout(() => makeRequest(retryCount + 1, chatHistory), delay);
-              });
-      };
+          const delay = backoffDelay * Math.pow(2, retryCount);
+          console.log(`Tentativa ${retryCount + 1} falhou. Tentando novamente em ${delay}ms...`);
+          console.log(error);
+          setTimeout(() => makeRequest(retryCount + 1, chatHistory), delay);
+        });
+    };
 
-      makeRequest(0, []);
+    makeRequest(0, []);
   });
 }
 
@@ -185,20 +187,20 @@ async function runZAPGPT(chathistory) {
   const completion = await openai.chat.completions.create({
     model: modelo,
     messages: chathistory,
-    temperature: temperatura,      
+    temperature: temperatura,
   });
 
   // Retorna a mensagem e o finish_reason
   return {
-      message: completion.choices[0].message,
-      finishReason: completion.choices[0].finish_reason
+    message: completion.choices[0].message,
+    finishReason: completion.choices[0].finish_reason
   };
 }
 
 //Leitura do QRCode
 clientConectaWhatsApp.on('qr', qr => {
   console.log('QRCode recebido, escaneie o código abaixo.');
-  qrcode.generate(qr, {small: true});
+  qrcode.generate(qr, { small: true });
 });
 
 //Resposta de sucesso
@@ -241,7 +243,7 @@ function addObject(numeroId, flowState, id, interact, chathistory, zapgpt, clien
     throw new Error('O numeroId já existe no banco de dados.');
   }
 
-  const objeto = { numeroId, flowState, id, interact, chathistory, zapgpt, cliente};
+  const objeto = { numeroId, flowState, id, interact, chathistory, zapgpt, cliente };
 
   if (dadosAtuais.length >= maxObjects) {
     // Excluir o objeto mais antigo
@@ -322,7 +324,7 @@ function updateFlow(numeroId, flowState) {
     writeJSONFile(DATABASE_FILE, dadosAtuais);
   }
 }
-  
+
 // Ler a propriedade "flowState"
 function readFlow(numeroId) {
   const objeto = readMap(numeroId);
@@ -338,7 +340,7 @@ function updateId(numeroId, id) {
     writeJSONFile(DATABASE_FILE, dadosAtuais);
   }
 }
-  
+
 // Ler a propriedade "id"
 function readId(numeroId) {
   const objeto = readMap(numeroId);
@@ -354,7 +356,7 @@ function updateInteract(numeroId, interact) {
     writeJSONFile(DATABASE_FILE, dadosAtuais);
   }
 }
-  
+
 // Ler a propriedade "interact"
 function readInteract(numeroId) {
   const objeto = readMap(numeroId);
@@ -369,39 +371,45 @@ function readMap(numeroId) {
 }
 
 clientConectaWhatsApp.on('message', async msg => {
-    
-    // msg.body !== null para ativar com qualquer coisa
-    if (!existsDB(msg.from) && msg.body.toLowerCase() === "falar com o poeta" && msg.from.endsWith('@c.us') && !msg.hasMedia) {
-        addObject(msg.from, 'stepGPT', 'id_temp', 'done', [], null, null, 200);
-    }
 
-    //Bloco do Agente GPT
-    if (existsDB(msg.from) && msg.body !== null && readFlow(msg.from) === 'stepGPT' && readId(msg.from) !== JSON.stringify(msg.id.id) && readInteract(msg.from) === 'done' && msg.from.endsWith('@c.us')) {
-        // Atualizar o status de digitação e outros dados relevantes
-        updateInteract(msg.from, 'typing');
-        updateId(msg.from, JSON.stringify(msg.id.id));
-        updateCliente(msg.from, await processMessage(msg));
-    
-        if (readChatHistory(msg.from).length === 0) {
-          // Inserir uma mensagem inicial de sistema no histórico de chat            
-          updateChatHistory(msg.from, [{ role: 'system', content: `${fs.readFileSync('prompt.txt', 'utf8')}` }]);
-        }          
-          updateChatHistory(msg.from, [...readChatHistory(msg.from), { role: 'user', content: `${readCliente(msg.from)}` }]);      
-          updateZAPGPT(msg.from, await brokerMaster(runZAPGPT, msg , readChatHistory(msg.from)));
-          // Enviar a resposta para o usuário
-          if (readZAPGPT(msg.from).content) {
-            updateChatHistory(msg.from, readChatHistory(msg.from).slice(0, -1)); // Remove a ultima interação
-            updateChatHistory(msg.from, [...readChatHistory(msg.from), { role: 'user', content: `${readCliente(msg.from)}` }]); 
-            updateChatHistory(msg.from, [...readChatHistory(msg.from), { role: 'assistant', content: `${readZAPGPT(msg.from).content}` }]);
-            const chat = await msg.getChat();
-            await chat.sendSeen();
-            await chat.sendStateTyping();
-            await delay(10000); // Mudado aqui 3000
-            await clientConectaWhatsApp.sendMessage(msg.from, `${readZAPGPT(msg.from).content}`);
-            updateFlow(msg.from, 'stepGPT');
-            updateInteract(msg.from, 'done');          
-        }
+  // msg.body !== null para ativar com qualquer coisa
+  if (!existsDB(msg.from) &&
+
+    (msg.body.toLowerCase() === "iniciar bot" ||
+      msg.body.toLowerCase() == "Gostaria de tirar dúvidas a respeito do Aplicativo FotoGeo por este canal de atendimento".toLowerCase() ||
+      msg.body.toLowerCase().includes("expirou e gostaria de fazer a seguinte pergunta:".toLowerCase())) &&
+
+    msg.from.endsWith('@c.us') && !msg.hasMedia) {
+    addObject(msg.from, 'stepGPT', 'id_temp', 'done', [], null, null, 200);
+  }
+
+  //Bloco do Agente GPT
+  if (existsDB(msg.from) && msg.body !== null && readFlow(msg.from) === 'stepGPT' && readId(msg.from) !== JSON.stringify(msg.id.id) && readInteract(msg.from) === 'done' && msg.from.endsWith('@c.us')) {
+    // Atualizar o status de digitação e outros dados relevantes
+    updateInteract(msg.from, 'typing');
+    updateId(msg.from, JSON.stringify(msg.id.id));
+    updateCliente(msg.from, await processMessage(msg));
+
+    if (readChatHistory(msg.from).length === 0) {
+      // Inserir uma mensagem inicial de sistema no histórico de chat            
+      updateChatHistory(msg.from, [{ role: 'system', content: `${fs.readFileSync('prompt.txt', 'utf8')}` }]);
     }
+    updateChatHistory(msg.from, [...readChatHistory(msg.from), { role: 'user', content: `${readCliente(msg.from)}` }]);
+    updateZAPGPT(msg.from, await brokerMaster(runZAPGPT, msg, readChatHistory(msg.from)));
+    // Enviar a resposta para o usuário
+    if (readZAPGPT(msg.from).content) {
+      updateChatHistory(msg.from, readChatHistory(msg.from).slice(0, -1)); // Remove a ultima interação
+      updateChatHistory(msg.from, [...readChatHistory(msg.from), { role: 'user', content: `${readCliente(msg.from)}` }]);
+      updateChatHistory(msg.from, [...readChatHistory(msg.from), { role: 'assistant', content: `${readZAPGPT(msg.from).content}` }]);
+      const chat = await msg.getChat();
+      await chat.sendSeen();
+      await chat.sendStateTyping();
+      await delay(3000); // Mudado aqui 3000
+      await clientConectaWhatsApp.sendMessage(msg.from, `*FotoGeoIA:*\n\n${readZAPGPT(msg.from).content}`);
+      updateFlow(msg.from, 'stepGPT');
+      updateInteract(msg.from, 'done');
+    }
+  }
 
 });
 
@@ -456,42 +464,45 @@ async function obterUltimaMensagem(contato) {
 
 clientConectaWhatsApp.on('message_create', async (msg) => {
 
-    //Instruções da Central de Controle
-    if (msg.fromMe && msg.body.startsWith('!help') && msg.to === msg.from) {    
-      await clientConectaWhatsApp.sendMessage(msg.from, `*Sistema de Controle ZAPGPT v1.0*\n\nFormato do *contato*: xxyyyyyyyyy\n\n*Atendimento Humano*\nMétodo Direto: "Ativar humano"\nMétodo Indireto: "!humano xxyyyyyyyyy"\n\n*Adicionar Lead a Base*\nMétodo Direto: "Olá, tudo bom?"\nMétodo Indireto: "!start xxyyyyyyyyy"`);
-    }
-  
-    //Deletar um contato da Base de Dados (Atendimento Humano)
-    if (msg.fromMe && msg.body.startsWith('!humano ') && msg.to === msg.from) {
-      let contato = formatarContato(msg.body,'!humano ');
-      if(existsDB(contato)){
-      deleteObject(contato);}
-      await clientConectaWhatsApp.sendMessage(msg.from, `Deletei da Base de Dados o numero: ${contato}`);
-    }
-    
-    //Deletar um contato da Base de Dados Método Direto (Atendimento Humano)
-    if (msg.fromMe && msg.body === 'Ativar humano' && msg.to !== msg.from) {
-      if(existsDB(msg.to)){
-        deleteObject(msg.to);}
-        await clientConectaWhatsApp.sendMessage(msg.from, `Deletei da Base de Dados o numero: ${msg.to}`);    
-    }
-  
-    //Adicionar um contato na base de dados (Método Indireto)
-    if (msg.fromMe && msg.body.startsWith('!start ') && msg.to === msg.from) {
-      let contato = formatarContato(msg.body,'!start ');
-      if(existsDB(contato)){
-      deleteObject(contato);}
-      addObject(contato, 'stepGPT', 'id_temp', 'done', [], null, null, 200);
+  //Instruções da Central de Controle
+  if (msg.fromMe && msg.body.startsWith('!help') && msg.to === msg.from) {
+    await clientConectaWhatsApp.sendMessage(msg.from, `*Sistema de Controle ZAPGPT v1.0*\n\nFormato do *contato*: xxyyyyyyyyy\n\n*Atendimento Humano*\nMétodo Direto: "Ativar humano"\nMétodo Indireto: "!humano xxyyyyyyyyy"\n\n*Adicionar Lead a Base*\nMétodo Direto: "Olá, tudo bom?"\nMétodo Indireto: "!start xxyyyyyyyyy"`);
+  }
 
-      await clientConectaWhatsApp.sendMessage(msg.from, `Adiconei ao GPT: ${contato}`);
+  //Deletar um contato da Base de Dados (Atendimento Humano)
+  if (msg.fromMe && msg.body.startsWith('!humano ') && msg.to === msg.from) {
+    let contato = formatarContato(msg.body, '!humano ');
+    if (existsDB(contato)) {
+      deleteObject(contato);
     }
-  
-    //Adicionar um contato na base de dados (Método Direto)
-    if (msg.fromMe && msg.body === "Olá, tudo bom?" && msg.to !== msg.from) {
-      if(!existsDB(msg.to)){
+    await clientConectaWhatsApp.sendMessage(msg.from, `Deletei da Base de Dados o numero: ${contato}`);
+  }
+
+  //Deletar um contato da Base de Dados Método Direto (Atendimento Humano)
+  if (msg.fromMe && msg.body === 'Ativar humano' && msg.to !== msg.from) {
+    if (existsDB(msg.to)) {
+      deleteObject(msg.to);
+    }
+    await clientConectaWhatsApp.sendMessage(msg.from, `Deletei da Base de Dados o numero: ${msg.to}`);
+  }
+
+  //Adicionar um contato na base de dados (Método Indireto)
+  if (msg.fromMe && msg.body.startsWith('!start ') && msg.to === msg.from) {
+    let contato = formatarContato(msg.body, '!start ');
+    if (existsDB(contato)) {
+      deleteObject(contato);
+    }
+    addObject(contato, 'stepGPT', 'id_temp', 'done', [], null, null, 200);
+
+    await clientConectaWhatsApp.sendMessage(msg.from, `Adiconei ao GPT: ${contato}`);
+  }
+
+  //Adicionar um contato na base de dados (Método Direto)
+  if (msg.fromMe && msg.body === "Olá, tudo bom?" && msg.to !== msg.from) {
+    if (!existsDB(msg.to)) {
       addObject(msg.to, 'stepGPT', 'id_temp', 'done', [], null, null, 200);
       await clientConectaWhatsApp.sendMessage(msg.from, `Adicionei ao GPT pelo método direto: ${msg.to}`);
-      }
-    }        
-  
+    }
+  }
+
 });

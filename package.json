@@ -8,7 +8,9 @@
     "child_process": "^1.0.2",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
-    "openai": "^4.0.0",
+    "openai": "^4.77.0",
+    "puppeteer": "^23.11.1",
+    "puppeteer-core": "^23.11.1",
     "qrcode-terminal": "^0.12.0",
     "uuid": "^11.0.2",
     "whatsapp-web.js": "^1.26.0"
