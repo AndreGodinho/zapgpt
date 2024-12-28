@@ -1,7 +1,7 @@
 {
   "name": "zapgpt",
   "version": "1.0.0",
-  "description": "Inteligência Artificial no Whatsapp criada pelo Johnny Love para o seu negócio",
+  "description": "Inteligência Artificial no Whatsapp",
   "dependencies": {
     "axios": "^1.6.0",
     "body-parser": "^1.20.3",
