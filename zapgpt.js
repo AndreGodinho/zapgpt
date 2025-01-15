@@ -72,6 +72,8 @@ async function runAudio(arquivo) {
 
 }
 
+// const ffmpeg = require('fluent-ffmpeg');
+
 async function converterArquivoOGGparaMP3(caminhoArquivoEntrada, nomeArquivoSaida) {
   return new Promise((resolve, reject) => {
     const ffmpeg = spawn('ffmpeg', ['-y', '-i', caminhoArquivoEntrada, '-loglevel', '0', '-nostats', nomeArquivoSaida]);
@@ -91,6 +93,7 @@ async function converterArquivoOGGparaMP3(caminhoArquivoEntrada, nomeArquivoSaid
 }
 
 async function processMessage(msg) {
+  console.log('Mensagem recebida aqui:', msg.body);
   if (msg.hasMedia) {
     const attachmentData = await msg.downloadMedia();
 
@@ -117,7 +120,10 @@ async function processMessage(msg) {
         }
       }
     }
+    console.log('Mensagem de áudio recebida, mas não processada.');
+    return msg.body;
   } else {
+    console.log('Mensagem de texto recebida.');
     return msg.body;
   }
 }
@@ -393,7 +399,8 @@ clientConectaWhatsApp.on('message', async msg => {
 
     if (readChatHistory(msg.from).length === 0) {
       // Inserir uma mensagem inicial de sistema no histórico de chat            
-      updateChatHistory(msg.from, [{ role: 'system', content: `${fs.readFileSync('prompt.txt', 'utf8')}` }]);
+      // updateChatHistory(msg.from, [{ role: 'system', content: `${fs.readFileSync('prompt.txt', 'utf8')}` }]);
+      updateChatHistory(msg.from, [{ role: 'developer', content: `${fs.readFileSync('prompt.txt', 'utf8')}` }]);
     }
     updateChatHistory(msg.from, [...readChatHistory(msg.from), { role: 'user', content: `${readCliente(msg.from)}` }]);
     updateZAPGPT(msg.from, await brokerMaster(runZAPGPT, msg, readChatHistory(msg.from)));
@@ -507,3 +514,10 @@ clientConectaWhatsApp.on('message_create', async (msg) => {
   }
 
 });
+
+/* if (msg.hasMedia) {
+  console.log('msg.from', msg.from);
+  await clientConectaWhatsApp.sendMessage(msg.from, `*FotoGeoIA:*\n\nDesculpe, mas ainda não consigo processar mensagens de áudio.`);
+  updateFlow(msg.from, 'stepGPT');
+  updateInteract(msg.from, 'done');
+} else { */
