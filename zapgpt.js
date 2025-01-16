@@ -384,6 +384,8 @@ clientConectaWhatsApp.on('message', async msg => {
     (msg.body.toLowerCase() === "iniciar bot" ||
       msg.body.toLowerCase() == "Gostaria de tirar dúvidas a respeito do Aplicativo FotoGeo por este canal de atendimento".toLowerCase() ||
       msg.body.toLowerCase().includes("vim pelo site e gostaria de mais informações".toLowerCase()) ||
+      msg.body.toLowerCase().includes("Dúvidas a respeito do Aplicativo Relatório FotoGEO".toLowerCase()) ||
+      msg.body.toLowerCase().includes("Gostaria de tirar uma dúvida, fazer uma reclamação ou dar uma sugestão referente ao Aplicativo FotoGeo".toLowerCase()) ||
       msg.body.toLowerCase().includes("expirou e gostaria de fazer a seguinte pergunta:".toLowerCase())) &&
 
     msg.from.endsWith('@c.us') && !msg.hasMedia) {
