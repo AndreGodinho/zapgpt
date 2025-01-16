@@ -26,6 +26,7 @@ sudo apt install gdebi
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo gdebi google-chrome-stable_current_amd64.deb
 sudo apt-get -f install
+rm -r zapgpt
 git clone https://github.com/AndreGodinho/zapgpt.git
 cd zapgpt
 mkdir audiobruto
@@ -47,6 +48,10 @@ nano .env
 Escrevar a sua chave da Openai:
 OPENAI_API_KEY=ssssssyyyyyysssssllll7777778888899993333
 ctrl + s ; crtl + x
+
+cd zapgpt
+rm zapgptdb.json
+nano .env
 pm2 start zapgpt.js
 pm2 logs zapgpt
 #### Faça a leitura do qrcode

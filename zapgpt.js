@@ -30,13 +30,13 @@ const clientConectaWhatsApp = new Client({
   puppeteer: {
     headless: true,
     //CAMINHO DO CHROME PARA WINDOWS (REMOVER O COMENTÁRIO ABAIXO)
-    // executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
+    executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
     //===================================================================================
     // CAMINHO DO CHROME PARA MAC (REMOVER O COMENTÁRIO ABAIXO)
     //executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
     //===================================================================================
     // CAMINHO DO CHROME PARA LINUX (REMOVER O COMENTÁRIO ABAIXO)
-    executablePath: '/usr/bin/google-chrome-stable',
+    // executablePath: '/usr/bin/google-chrome-stable',
     //===================================================================================
     args: [
       '--no-sandbox', //Necessário para sistemas Linux
@@ -45,7 +45,7 @@ const clientConectaWhatsApp = new Client({
       '--disable-accelerated-2d-canvas',
       '--no-first-run',
       '--no-zygote',
-      '--single-process', // <- Este não funciona no Windows, apague caso suba numa máquina Windows
+      //'--single-process', // <- Este não funciona no Windows, apague caso suba numa máquina Windows
       '--disable-gpu'
     ]
   },
@@ -95,7 +95,7 @@ async function converterArquivoOGGparaMP3(caminhoArquivoEntrada, nomeArquivoSaid
 async function processMessage(msg) {
   console.log('Mensagem recebida aqui:', msg.body);
   if (msg.hasMedia) {
-    const attachmentData = await msg.downloadMedia();
+    /* const attachmentData = await msg.downloadMedia();
 
     if (attachmentData.mimetype === 'audio/ogg; codecs=opus') {
       const audioFilePath = `./audiobruto/${msg.from.split('@c.us')[0]}.ogg`;
@@ -119,9 +119,9 @@ async function processMessage(msg) {
           console.error(err);
         }
       }
-    }
-    console.log('Mensagem de áudio recebida, mas não processada.');
-    return msg.body;
+    } */
+    console.log('Mensagem de áudio recebida, mas não processada.', msg.hasMedia);
+    return 'Desculpe, mas ainda não consigo processar mensagens de áudio/video/fotos.';
   } else {
     console.log('Mensagem de texto recebida.');
     return msg.body;
@@ -377,7 +377,6 @@ function readMap(numeroId) {
 }
 
 clientConectaWhatsApp.on('message', async msg => {
-
   // msg.body !== null para ativar com qualquer coisa
   if (!existsDB(msg.from) &&
 
@@ -394,30 +393,39 @@ clientConectaWhatsApp.on('message', async msg => {
 
   //Bloco do Agente GPT
   if (existsDB(msg.from) && msg.body !== null && readFlow(msg.from) === 'stepGPT' && readId(msg.from) !== JSON.stringify(msg.id.id) && readInteract(msg.from) === 'done' && msg.from.endsWith('@c.us')) {
-    // Atualizar o status de digitação e outros dados relevantes
-    updateInteract(msg.from, 'typing');
-    updateId(msg.from, JSON.stringify(msg.id.id));
-    updateCliente(msg.from, await processMessage(msg));
+    let mensagem = await processMessage(msg);
 
-    if (readChatHistory(msg.from).length === 0) {
-      // Inserir uma mensagem inicial de sistema no histórico de chat            
-      // updateChatHistory(msg.from, [{ role: 'system', content: `${fs.readFileSync('prompt.txt', 'utf8')}` }]);
-      updateChatHistory(msg.from, [{ role: 'developer', content: `${fs.readFileSync('prompt.txt', 'utf8')}` }]);
-    }
-    updateChatHistory(msg.from, [...readChatHistory(msg.from), { role: 'user', content: `${readCliente(msg.from)}` }]);
-    updateZAPGPT(msg.from, await brokerMaster(runZAPGPT, msg, readChatHistory(msg.from)));
-    // Enviar a resposta para o usuário
-    if (readZAPGPT(msg.from).content) {
-      updateChatHistory(msg.from, readChatHistory(msg.from).slice(0, -1)); // Remove a ultima interação
+    if (mensagem === 'Desculpe, mas ainda não consigo processar mensagens de áudio/video/fotos.') {
+      mensagem += '\n\nEm breve um de nossos atendentes irá lhe responder.';
+      await delay(3000);
+      await clientConectaWhatsApp.sendMessage(msg.from, `*FotoGeoIA:*\n\n${mensagem}`);
+    } else {
+      // Atualizar o status de digitação e outros dados relevantes
+      updateInteract(msg.from, 'typing');
+      updateId(msg.from, JSON.stringify(msg.id.id));
+
+      updateCliente(msg.from, mensagem);
+
+      if (readChatHistory(msg.from).length === 0) {
+        // Inserir uma mensagem inicial de sistema no histórico de chat            
+        // updateChatHistory(msg.from, [{ role: 'system', content: `${fs.readFileSync('prompt.txt', 'utf8')}` }]);
+        updateChatHistory(msg.from, [{ role: 'developer', content: `${fs.readFileSync('prompt.txt', 'utf8')}` }]);
+      }
       updateChatHistory(msg.from, [...readChatHistory(msg.from), { role: 'user', content: `${readCliente(msg.from)}` }]);
-      updateChatHistory(msg.from, [...readChatHistory(msg.from), { role: 'assistant', content: `${readZAPGPT(msg.from).content}` }]);
-      const chat = await msg.getChat();
-      await chat.sendSeen();
-      await chat.sendStateTyping();
-      await delay(3000); // Mudado aqui 3000
-      await clientConectaWhatsApp.sendMessage(msg.from, `*FotoGeoIA:*\n\n${readZAPGPT(msg.from).content}`);
-      updateFlow(msg.from, 'stepGPT');
-      updateInteract(msg.from, 'done');
+      updateZAPGPT(msg.from, await brokerMaster(runZAPGPT, msg, readChatHistory(msg.from)));
+      // Enviar a resposta para o usuário
+      if (readZAPGPT(msg.from).content) {
+        updateChatHistory(msg.from, readChatHistory(msg.from).slice(0, -1)); // Remove a ultima interação
+        updateChatHistory(msg.from, [...readChatHistory(msg.from), { role: 'user', content: `${readCliente(msg.from)}` }]);
+        updateChatHistory(msg.from, [...readChatHistory(msg.from), { role: 'assistant', content: `${readZAPGPT(msg.from).content}` }]);
+        const chat = await msg.getChat();
+        await chat.sendSeen();
+        await chat.sendStateTyping();
+        await delay(3000); // Mudado aqui 3000
+        await clientConectaWhatsApp.sendMessage(msg.from, `*FotoGeoIA:*\n\n${readZAPGPT(msg.from).content}`);
+        updateFlow(msg.from, 'stepGPT');
+        updateInteract(msg.from, 'done');
+      }
     }
   }
 
