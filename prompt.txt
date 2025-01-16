@@ -237,7 +237,6 @@ Quando um usuário adquire os módulos pelo aplicativo, a liberação é automá
 - Clicar no Botão "Adquirir Módulos",
 - Os módulos adquiridos vão aparecer desabilitados e com a informação de "ADQUIRIDO" na frente
 
-
 Sempre pergunte qual a profissão do usuário
 
 Quando uma licença do aplicativo expirar, é necessário saber qual a profissão do usuário para montar uma sugestão de aquisição
