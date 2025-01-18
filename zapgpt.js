@@ -46,6 +46,9 @@ const sessao = 'zapgpt';
 // const wwebVersion = '2.3000.1019060436-alpha';
 const wwebVersion = '2.3000.1019400774-alpha';
 
+const SERVIDOR_LOCAL =  'C:/Program Files/Google/Chrome/Application/chrome.exe'
+const SERVIDOR_PRODUCAO = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe'
+const servidorUsado = SERVIDOR_LOCAL
 
 //Kit com os comandos otimizados para nuvem Ubuntu Linux (créditos Pedrinho da Nasa Comunidade ZDG)
 const clientConectaWhatsApp = new Client({
@@ -53,7 +56,7 @@ const clientConectaWhatsApp = new Client({
   puppeteer: {
     headless: true,
     //CAMINHO DO CHROME PARA WINDOWS (REMOVER O COMENTÁRIO ABAIXO)
-    executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
+    executablePath: servidorUsado,
     // executablePath: 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
     //===================================================================================
     // CAMINHO DO CHROME PARA MAC (REMOVER O COMENTÁRIO ABAIXO)
@@ -582,7 +585,7 @@ clientConectaWhatsApp.on('message_create', async (msg) => {
 });
 
 const codigosms = require('./modulos/codigoSMS/codigosms.js');
-codigosms(firebase, clientConectaWhatsApp);
+codigosms(firebase, clientConectaWhatsApp, servidorUsado, SERVIDOR_LOCAL);
 
 const reenvioSMS = require('./modulos/codigoSMS/reenviosms.js');
 

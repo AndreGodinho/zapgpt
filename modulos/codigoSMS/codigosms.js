@@ -1,9 +1,5 @@
-async function codigoSMS(firebase, clientConectaWhatsApp) {
-    await consultaNo(firebase, clientConectaWhatsApp); // Passe o `db` para a função
-}
-
 // Função assíncrona para consultar o nó no Realtime Database
-async function consultaNo(firebase, clientConectaWhatsApp) {
+async function codigoSMS(firebase, clientConectaWhatsApp, servidorUsado, SERVIDOR_LOCAL) {
     try {
         // Autenticação com email e senha
         await firebase.auth().signInWithEmailAndPassword(
@@ -30,17 +26,25 @@ async function consultaNo(firebase, clientConectaWhatsApp) {
 
                     const telefone2 = `55${chaveSemPrimeiro9}@c.us`; // Concatena com "55" e "@c.us"
 
-                    // if (chave === '65999835474' || chave === '14991888912' || chave === '65993026189') {
-                    console.log(`${formatarData(Date.now())} - Enviado WhatsApp para: ${chave} - ${campo.ultimoCodigoSMS}`);
+                    let isEnviaMensagem = true;
+                    if (servidorUsado === SERVIDOR_LOCAL) {
+                        if (chave !== '65999835474' && chave !== '14991888912' && chave !== '65993026189') {
+                            isEnviaMensagem = false;
+                        }
+                    } 
 
-                    await enviarMensagens(clientConectaWhatsApp, telefone2, campo.ultimoCodigoSMS, campo.reenvio);
-                    await enviarMensagens(clientConectaWhatsApp, telefone1, campo.ultimoCodigoSMS, campo.reenvio);
+                    if (isEnviaMensagem) {
+                        console.log(`${formatarData(Date.now())} - Enviado WhatsApp para: ${chave} - ${campo.ultimoCodigoSMS}`);
 
-                    await ref.child(chave).update({
-                        enviadoWhats: true
-                    });
-                    //} else {
-                    // console.log('R E A T I V A R  S M S  U R G E N T E');
+                        await enviarMensagens(clientConectaWhatsApp, telefone2, campo.ultimoCodigoSMS, campo.reenvio);
+                        await enviarMensagens(clientConectaWhatsApp, telefone1, campo.ultimoCodigoSMS, campo.reenvio);
+
+                        await ref.child(chave).update({
+                            enviadoWhats: true
+                        });
+                    } else {
+                        console.log(`${formatarData(Date.now())} - R E A T I V A R  S M S  U R G E N T E`);
+                    }
                     // await delay(3000);
                     // await clientConectaWhatsApp.sendMessage(`5514991888912@c.us`, buttonMessage);
                     //}
