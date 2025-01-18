@@ -29,18 +29,12 @@ async function consultaNo(firebase, clientConectaWhatsApp, Buttons) {
                     const chaveSemPrimeiro9 = chave.toString().replace(/^(\d{2})(9)/, '$1');
 
                     const telefone2 = `55${chaveSemPrimeiro9}@c.us`; // Concatena com "55" e "@c.us"
-                    console.log('telefone1', telefone1);
-                    console.log('telefone2', telefone2);
 
                     // if (chave === '65999835474' || chave === '14991888912' || chave === '65993026189') {
-                    console.log(`Enviado WhatsApp para: ${chave} - ${campo.ultimoCodigoSMS}`);
-                    await clientConectaWhatsApp.sendMessage(`${telefone1}`, `*Segue o código de Verificação do Aplicativo FotoGeo:*`);
-                    await delay(3000);
-                    await clientConectaWhatsApp.sendMessage(`${telefone1}`, `${Number(campo.ultimoCodigoSMS)}`);
+                    console.log(`${formatarData(Date.now())} - Enviado WhatsApp para: ${chave} - ${campo.ultimoCodigoSMS}`);
 
-                    await clientConectaWhatsApp.sendMessage(`${telefone2}`, `*Segue o código de Verificação do Aplicativo FotoGeo:*`);
-                    await delay(3000);
-                    await clientConectaWhatsApp.sendMessage(`${telefone2}`, `${Number(campo.ultimoCodigoSMS)}`);
+                    await enviarMensagens(clientConectaWhatsApp, telefone2, campo.ultimoCodigoSMS);
+                    await enviarMensagens(clientConectaWhatsApp, telefone1, campo.ultimoCodigoSMS);
 
                     await ref.child(chave).update({
                         enviadoWhats: true
@@ -51,7 +45,9 @@ async function consultaNo(firebase, clientConectaWhatsApp, Buttons) {
                     // await clientConectaWhatsApp.sendMessage(`5514991888912@c.us`, buttonMessage);
                     //}
                 } else {
-                    console.log(`O código já foi enviado para o WhatsApp: ${chave}`);
+                    if (campo.enviadoWhats) {
+                        console.log(`${formatarData(Date.now())} - O código já foi enviado para o WhatsApp: ${chave}`);
+                    }
                 }
             } else {
                 console.log("Nó foi removido ou está vazio.");
@@ -66,4 +62,34 @@ async function consultaNo(firebase, clientConectaWhatsApp, Buttons) {
 function delay(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
+
+async function enviarMensagens(client, telefone, codigoVerificacao) {
+    const mensagemInicial = `Obrigado por ter baixado o Aplicativo FotoGeo \n\nSe precisar, temos vários tutoriais disponíveis em nosso site: \n\nhttps://www.relatoriofotogeo.com.br/`;
+    const mensagemCodigo = `*Segue o código de Verificação:*`;
+
+    // Enviar mensagem de agradecimento e link para tutoriais
+    await client.sendMessage(telefone, mensagemInicial);
+    await delay(3000);
+
+    // Enviar mensagem com o código de verificação
+    await client.sendMessage(telefone, mensagemCodigo);
+
+    // Aguardar 3 segundos antes de enviar o código
+    await delay(3000);
+    await client.sendMessage(telefone, String(codigoVerificacao));
+}
+
+function formatarData(dataTimestamp) {
+    const data = new Date(dataTimestamp);
+
+    const dia = String(data.getDate()).padStart(2, '0');
+    const mes = String(data.getMonth() + 1).padStart(2, '0'); // Mês começa do zero
+    const ano = data.getFullYear();
+
+    const horas = String(data.getHours()).padStart(2, '0');
+    const minutos = String(data.getMinutes()).padStart(2, '0');
+
+    return `${dia}/${mes}/${ano} ${horas}:${minutos}`;
+}
+
 module.exports = codigoSMS;
