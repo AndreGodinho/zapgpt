@@ -14,6 +14,30 @@ const setTimeoutPromise = promisify(setTimeout);
 const writeFileAsync = promisify(fs.writeFile);
 dotenv.config();
 
+const firebase = require("firebase/compat/app");
+require("firebase/compat/database");
+require("firebase/compat/auth");
+
+const firebaseAndreMT = {
+  apiKey: process.env.MY_FOTOGEO_API_KEY,
+  authDomain: process.env.MY_FOTOGEO_AUTH_DOMAIN,
+  databaseURL: process.env.MY_FOTOGEO_DATA_BASE_URL,
+  projectId: process.env.MY_FOTOGEO_PROJECT_ID,
+  storageBucket: process.env.MY_FOTOGEO_STORAGE_BUCKET,
+  messagingSenderId: process.env.MY_FOTOGEO_MESSAGING_SENDER_ID,
+  appId: process.env.MY_FOTOGEO_APP_ID,
+  measurementId: process.env.MY_FOTOGEO_MEASUREMENT_ID,
+};
+
+// Inicializar Firebase
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseAndreMT);
+  console.log('entrou')
+} else {
+  console.log('não entrou')
+}
+
+
 // Variáveis do seu modelo
 
 const modelo = "gpt-3.5-turbo-1106"; //Modelo escolhido para a sua IA
@@ -533,8 +557,17 @@ clientConectaWhatsApp.on('message_create', async (msg) => {
       await clientConectaWhatsApp.sendMessage(msg.from, `Adicionei ao GPT pelo método direto: ${msg.to}`);
     }
   }
-
 });
+
+const codigosms = require('./modulos/codigoSMS/codigosms.js');
+const mensagem = codigosms(firebase, clientConectaWhatsApp, Buttons);
+console.log(mensagem);
+
+
+
+
+
+
 
 /* if (msg.hasMedia) {
   console.log('msg.from', msg.from);

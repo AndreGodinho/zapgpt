@@ -2,7 +2,7 @@
   {
     "numeroId": "556599835474@c.us",
     "flowState": "stepGPT",
-    "id": "\"3EB0E14336E96AEA560E94\"",
+    "id": "\"96B440D109565FB27A84645493157839\"",
     "interact": "done",
     "chathistory": [
       {
@@ -16,13 +16,21 @@
       {
         "role": "assistant",
         "content": "Olá! Estou aqui para ajudar com o aplicativo FotoGeo. Como posso auxiliá-lo hoje?"
+      },
+      {
+        "role": "user",
+        "content": "Iniciar bot"
+      },
+      {
+        "role": "assistant",
+        "content": "Olá! Posso te ajudar com informações sobre os módulos e funcionalidades do aplicativo FotoGeo para a geração de relatórios fotográficos. Se precisar de ajuda com alguma função específica ou para adquirir módulos, fique à vontade para perguntar."
       }
     ],
     "zapgpt": {
       "role": "assistant",
-      "content": "Olá! Estou aqui para ajudar com o aplicativo FotoGeo. Como posso auxiliá-lo hoje?",
+      "content": "Olá! Posso te ajudar com informações sobre os módulos e funcionalidades do aplicativo FotoGeo para a geração de relatórios fotográficos. Se precisar de ajuda com alguma função específica ou para adquirir módulos, fique à vontade para perguntar.",
       "refusal": null
     },
-    "cliente": "iniciar bot"
+    "cliente": "Iniciar bot"
   }
 ]
