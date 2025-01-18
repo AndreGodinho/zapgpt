@@ -31,10 +31,7 @@ const firebaseAndreMT = {
 
 // Inicializar Firebase
 if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseAndreMT);
-  console.log('entrou')
-} else {
-  console.log('não entrou')
+  firebase.initializeApp(firebaseAndreMT);  
 }
 
 
@@ -561,12 +558,6 @@ clientConectaWhatsApp.on('message_create', async (msg) => {
 
 const codigosms = require('./modulos/codigoSMS/codigosms.js');
 const mensagem = codigosms(firebase, clientConectaWhatsApp, Buttons);
-console.log(mensagem);
-
-
-
-
-
 
 
 /* if (msg.hasMedia) {
