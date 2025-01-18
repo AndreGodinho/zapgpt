@@ -1,14 +1,15 @@
 // Invocamos o leitor de qr code
+// https://platform.openai.com/playground/chat?models=gpt-4o
+
 console.log('ZapGPT v1.0 - Inicializando...');
-const qrcode = require('qrcode-terminal');
-const { Client, Buttons, List, MessageMedia, LocalAuth } = require('whatsapp-web.js');
-const fs = require('fs');
-const path = require('path');
-const OpenAI = require('openai');
-const dotenv = require('dotenv');
-const axios = require('axios');
-const { spawn } = require('child_process');
-const { promisify } = require('util');
+const qrcode = require('qrcode-terminal'); // OK
+const { Client, Buttons, List, MessageMedia, LocalAuth } = require('whatsapp-web.js'); // OK
+const fs = require('fs'); // OK
+const path = require('path'); // OK
+const OpenAI = require('openai'); // OK
+const dotenv = require('dotenv'); // OK
+const { spawn } = require('child_process');// OK
+const { promisify } = require('util'); // OK
 const setTimeoutPromise = promisify(setTimeout);
 const writeFileAsync = promisify(fs.writeFile);
 dotenv.config();
@@ -20,8 +21,9 @@ const temperatura = 1; //Temperatura da sua IA
 const DATABASE_FILE = 'zapgptdb.json'; //Banco de dados da sua IA
 const sessao = 'zapgpt';
 
-// Final das variáveis do seu modelo
-const wwebVersion = '2.3000.1019060436-alpha';
+// Final das variáveis do seu modelo https://github.com/wppconnect-team/wa-version/releases
+// const wwebVersion = '2.3000.1019060436-alpha';
+const wwebVersion = '2.3000.1019400774-alpha';
 
 
 //Kit com os comandos otimizados para nuvem Ubuntu Linux (créditos Pedrinho da Nasa Comunidade ZDG)
@@ -30,13 +32,13 @@ const clientConectaWhatsApp = new Client({
   puppeteer: {
     headless: true,
     //CAMINHO DO CHROME PARA WINDOWS (REMOVER O COMENTÁRIO ABAIXO)
-    // executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
+    executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
     //===================================================================================
     // CAMINHO DO CHROME PARA MAC (REMOVER O COMENTÁRIO ABAIXO)
     //executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
     //===================================================================================
     // CAMINHO DO CHROME PARA LINUX (REMOVER O COMENTÁRIO ABAIXO)
-    executablePath: '/usr/bin/google-chrome-stable',
+    // executablePath: '/usr/bin/google-chrome-stable',
     //===================================================================================
     args: [
       '--no-sandbox', //Necessário para sistemas Linux
@@ -45,7 +47,7 @@ const clientConectaWhatsApp = new Client({
       '--disable-accelerated-2d-canvas',
       '--no-first-run',
       '--no-zygote',
-      '--single-process', // <- Este não funciona no Windows, apague caso suba numa máquina Windows
+      // '--single-process', // <- Este não funciona no Windows, apague caso suba numa máquina Windows
       '--disable-gpu'
     ]
   },
@@ -382,6 +384,8 @@ clientConectaWhatsApp.on('message', async msg => {
     (msg.body.toLowerCase() === "iniciar bot" ||
       msg.body.toLowerCase() == "Gostaria de tirar dúvidas a respeito do Aplicativo FotoGeo por este canal de atendimento".toLowerCase() ||
       msg.body.toLowerCase().includes("vim pelo site e gostaria de mais informações".toLowerCase()) ||
+      msg.body.toLowerCase().includes("Estou com dúvidas em relação as minhas compras do FotoGeo".toLowerCase()) ||
+      msg.body.toLowerCase().includes("Estou com dúvidas referente ao Aplicativo FotoGeo".toLowerCase()) ||
       msg.body.toLowerCase().includes("Dúvidas a respeito do Aplicativo Relatório FotoGEO".toLowerCase()) ||
       msg.body.toLowerCase().includes("Gostaria de tirar uma dúvida, fazer uma reclamação ou dar uma sugestão referente ao Aplicativo FotoGeo".toLowerCase()) ||
       msg.body.toLowerCase().includes("expirou e gostaria de fazer a seguinte pergunta:".toLowerCase())) &&
@@ -487,8 +491,8 @@ clientConectaWhatsApp.on('message_create', async (msg) => {
   }
 
   //Deletar um contato da Base de Dados (Atendimento Humano)
-  if (msg.fromMe && msg.body.startsWith('!humano ') && msg.to === msg.from) {
-    let contato = formatarContato(msg.body, '!humano ');
+  if (msg.fromMe && msg.body.startsWith('!humano') && msg.to === msg.from) {
+    let contato = formatarContato(msg.body, '!humano');
     if (existsDB(contato)) {
       deleteObject(contato);
     }
@@ -497,6 +501,14 @@ clientConectaWhatsApp.on('message_create', async (msg) => {
 
   //Deletar um contato da Base de Dados Método Direto (Atendimento Humano)
   if (msg.fromMe && msg.body === 'Ativar humano' && msg.to !== msg.from) {
+    if (existsDB(msg.to)) {
+      deleteObject(msg.to);
+    }
+    await clientConectaWhatsApp.sendMessage(msg.from, `Deletei da Base de Dados o numero: ${msg.to}`);
+  }
+
+  //Deletar um contato da Base de Dados Método Direto (Atendimento Humano)
+  if (msg.fromMe && msg.body.toLowerCase().includes('Meu nome é André Godinho e vou assumir a conversa a partir de agora'.toLowerCase()) && msg.to !== msg.from) {
     if (existsDB(msg.to)) {
       deleteObject(msg.to);
     }

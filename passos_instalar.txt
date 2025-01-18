@@ -95,3 +95,41 @@ npm install
 
 Rodar o zapgpt:
 node zapgpt.js
+
+
+
+
+rm -r zapgpt
+git clone https://github.com/AndreGodinho/zapgpt.git
+nano .env
+
+npm install
+npm run install-deps
+npm run install-ffmpeg
+
+npm install -g pm2 --save-dev
+npm install -g whatsapp-web.js
+npm install -g puppeteer
+npm install -g qrcode-terminal
+npm install -g openai
+npm install -g dotenv
+npm install -g util
+
+
+cd zapgpt
+rm zapgptdb.json
+nano .env
+pm2 delete zapgpt.js
+pm2 start zapgpt.js
+pm2 logs zapgpt
+
+
+
+npm install -g fs
+npm install -g path
+npm install -g axios
+npm install -g child_process
+
+
+
+https://github.com/wppconnect-team/wa-version
