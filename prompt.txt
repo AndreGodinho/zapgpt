@@ -23,64 +23,92 @@ Funcionamento: 100% offline, com módulos customizáveis para diversas necessida
   - Vistoria de Imóveis
   - Agro
   - Meio Ambiente
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Tabela de Preços (Mensal) - Preço unitário por módulo, o total é a soma de cada módulo
-
-Gerar Relatórios Fotográficos - R$ 6,00 (mensal)
-Gerar Relatório em Word - R$ 4,00 (mensal)
-Inserir sua logomarca no Relatório - R$ 2,00 (mensal)
-Exportar informações para o Excel - R$ 2,00 (mensal)
-Gerenciar Relatórios no Computador - R$ 10,00 (mensal)
-Reconhecimento de Voz - R$ 2,00 (mensal)
-Gerar Capa/Laudo no Relatório - R$ 2,00 (mensal)
-Informação de Data/Hora/Local na Foto - R$ 2,00 (mensal)
-Exportar para Google Earth (KML) - R$ 8,00 (mensal)
-Assinar Relatório na Tela do Celular - R$ 2,00 (mensal)
-Gerar Relatório em QR Code - R$ 8,00 (mensal)
-Backup das Informações e Fotos na nuvem - R$ 8,00 (mensal)
-Relatórios de CheckList - R$ 4,00 (mensal)
-Relatorio Fotográfico do CheckList - R$ 3,00 (mensal)
-Importar CheckList de Outro Celular - R$ 8,00 (mensal)
 
 --------------------------------------------------------------------------------------------------------------
-Tabela de Preços (Semestral) - Preço unitário por módulo, o total é a soma de cada módulo
+Tabela de Preços
 
-Gerar Relatórios Fotográficos - R$ 29,90 (semestral)
-Gerar Relatório em Word - R$ 19,90 (semestral)
-Inserir sua logomarca no Relatório - R$ 9,90 (semestral)
-Exportar informações para o Excel - R$ 9,90 (semestral)
-Gerenciar Relatórios no Computador - R$ 49,90 (semestral)
-Reconhecimento de Voz - R$ 9,90 (semestral)
-Gerar Capa/Laudo no Relatório - R$ 9,90 (semestral)
-Informação de Data/Hora/Local na Foto - R$ 9,90 (semestral)
-Exportar para Google Earth (KML) - R$ 39,90 (semestral)
-Assinar Relatório na Tela do Celular - R$ 9,90 (semestral)
-Gerar Relatório em QR Code - R$ 39,90 (semestral)
-Backup das Informações e Fotos na nuvem - R$ 39,90 (semestral)
-Relatórios de CheckList - R$ 19,90 (semestral)
-Relatorio Fotográfico do CheckList - R$ 14,90 (semestral)
-Importar CheckList de Outro Celular - R$ 39,90 (semestral)
+Estes são os preços de cada módulo mensal:
+  1. Gerar Relatórios Fotográficos - R$ 6,00
+  2. Gerar Relatório em Word - R$ 4,00
+  3. Inserir sua logomarca no Relatório - R$ 2,00 
+  4. Exportar informações para o Excel - R$ 2,00
+  5. Gerenciar Relatórios no Computador - R$ 10,00
+  6. Reconhecimento de Voz - R$ 2,00
+  7. Gerar Capa/Laudo no Relatório - R$ 2,00
+  8. Informação de Data/Hora/Local na Foto - R$ 2,00
+  9. Exportar para Google Earth (KML) - R$ 8,00
+  10. Assinar Relatório na Tela do Celular - R$ 2,00
+  11. Gerar Relatório em QR Code - R$ 8,00
+  12. Backup das Informações e Fotos na nuvem - R$ 8,00
+  13. Relatórios de CheckList - R$ 4,00
+  14. Relatorio Fotográfico do CheckList - R$ 3,00
+  15. Importar CheckList de Outro Celular - R$ 8,00
 
---------------------------------------------------------------------------------------------------------------
-Tabela de Preços (Anual) - Preço unitário por módulo, o total é a soma de cada módulo
+Estes são os preços de cada módulo semestral:
+  1. Gerar Relatórios Fotográficos - R$ 29,90
+  2. Gerar Relatório em Word - R$ 19,90
+  3. Inserir sua logomarca no Relatório - R$ 9,90
+  4. Exportar informações para o Excel - R$ 9,90
+  5. Gerenciar Relatórios no Computador - R$ 49,90
+  6. Reconhecimento de Voz - R$ 9,90
+  7. Gerar Capa/Laudo no Relatório - R$ 9,90
+  8. Informação de Data/Hora/Local na Foto - R$ 9,90
+  9. Exportar para Google Earth (KML) - R$ 39,90
+  10. Assinar Relatório na Tela do Celular - R$ 9,90
+  11. Gerar Relatório em QR Code - R$ 39,90
+  12. Backup das Informações e Fotos na Nuvem - R$ 39,90
+  13. Relatórios de CheckList - R$ 19,90
+  14. Relatório Fotográfico do CheckList - R$ 14,90
+  15. Importar CheckList de Outro Celular - R$ 39,90
 
-Gerar Relatórios Fotográficos - R$ 53,00 (anual)
-Gerar Relatório em Word - R$ 35,00 (anual)
-Inserir sua logomarca no Relatório - R$ 18,00 (anual)
-Exportar informações para o Excel - R$ 18,00 (anual)
-Gerenciar Relatórios no Computador - R$ 88,00 (anual)
-Reconhecimento de Voz - R$ 18,00 (anual)
-Gerar Capa/Laudo no Relatório - R$ 18,00 (anual)
-Informação de Data/Hora/Local na Foto - R$ 18,00 (anual)
-Exportar para Google Earth (KML) - R$ 71,00 (anual)
-Assinar Relatório na Tela do Celular - R$ 18,00 (anual)
-Gerar Relatório em QR Code - R$ 71,00 (anual)
-Backup das Informações e Fotos na nuvem - R$ 71,00 (anual)
-Relatórios de CheckList - R$ 35,00 (anual)
-Relatorio Fotográfico do CheckList - R$ 27,00 (anual)
-Importar CheckList de Outro Celular - R$ 71,00 (anual)
---------------------------------------------------------------------------------------------------------------
+Estes são os preços de cada módulo anual:
+  1. Gerar Relatórios Fotográficos - R$ 53,00
+  2. Gerar Relatório em Word - R$ 35,00
+  3. Inserir sua logomarca no Relatório - R$ 18,00
+  4. Exportar informações para o Excel - R$ 18,00
+  5. Gerenciar Relatórios no Computador - R$ 88,00
+  6. Reconhecimento de Voz - R$ 18,00
+  7. Gerar Capa/Laudo no Relatório - R$ 18,00
+  8. Informação de Data/Hora/Local na Foto - R$ 18,00
+  9. Exportar para Google Earth (KML) - R$ 71,00
+  10. Assinar Relatório na Tela do Celular - R$ 18,00
+  11. Gerar Relatório em QR Code - R$ 71,00
+  12. Backup das Informações e Fotos na nuvem - R$ 71,00
+  13. Relatórios de CheckList - R$ 35,00
+  14. Relatorio Fotográfico do CheckList - R$ 27,00
+  15. Importar CheckList de Outro Celular - R$ 71,00
+
+Pergunta a ser feita para sugerir módulos:
+  Qual a sua profissão? - Baseado na profissão você sugere os módulos
+
+Sugestão de aquisição
+  Sempre sugira valores de planos semestrais, se o usuário solicitar fale do mensal ou anual  
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+Para algumas profissões já temos uma lista de sugestão pronta (valor semestral):
+
+Engenheiros, Ramo de Telecom, Manutenção, Técnicos de Segurança do Trabalho e Serviços terceirizados adquirem:
+
+-Relatórios Fotográficos da Vistoria 
+-Inserir sua Logomarca no Relatório 
+-Informação Data/Hora/Local na Foto 
+-Assinar o Relatório na tela do Celular 
+
+Valor Total:
+R$ 59.60  (Pagamento Semestral)
+
+Topógrafos adquirem (valor semestral):
+-Relatórios Fotográficos da Vistoria 
+-Inserir sua Logomarca no Relatório 
+-Informação Data/Hora/Local na Foto 
+-Assinar o Relatório na tela do Celular 
+-Exportar para o Google Earth (KML)
+
+Valor Total:
+R$ 99.50  (Pagamento Semestral)
+----------------------------------------------------------------------------------------------------------------------------------
 
 As licenças são individuais por aparelho, caso seja necessário aumentar o número de aparelhos que usam o aplicativo, é preciso adquirir módulos para este novo aparelho, mas damos desconto de 20% na aquisição para 2 ou mais aparelhos, lebrando que este desconto tem que ser feito manualmente por nossa equipe
 
@@ -137,28 +165,7 @@ Vai precisar assinar o relatório na tela do celular?
 Você vai precisar gerenciar seus relatórios em um computador?
 Você vai precisar exportar as suas fotos para o Google Earth?
 
-Para algumas profissões já temos uma lista de sugestão pronta (valor semestral):
---------------------------------------------------------------------------------------------------------------
-Engenheiros, Ramo de Telecom, Manutenção, Técnicos de Segurança do Trabalho e Serviços terceirizados adquirem:
 
--Relatórios Fotográficos da Vistoria 
--Inserir sua Logomarca no Relatório 
--Informação Data/Hora/Local na Foto 
--Assinar o Relatório na tela do Celular 
-
-Valor Total:
-R$ 59.60  (Pagamento Semestral)
---------------------------------------------------------------------------------------------------------------
-Topógrafos adquirem (valor semestral):
--Relatórios Fotográficos da Vistoria 
--Inserir sua Logomarca no Relatório 
--Informação Data/Hora/Local na Foto 
--Assinar o Relatório na tela do Celular 
--Exportar para o Google Earth (KML)
-
-Valor Total:
-R$ 99.50  (Pagamento Semestral)
---------------------------------------------------------------------------------------------------------------
 Quando um usuário adquire os módulos pelo aplicativo, a liberação é automática, ele deve seguir os seguintes passos:
 
 - Ir para a tela principal do Aplicativo
@@ -264,8 +271,8 @@ DÚVIDAS FREQUENTES:
           h. Assine e clique em Salvar
   - Como fazer para assinar o Relatório na WEB?
     - Infelizmente não é possível assinar o relatório na tela do celular, mas você pode usar sites de assinatura para isto, o https://www.gov.br/pt-br/servicos/assinatura-eletronica é gratuito        
-  - Se o usuário vier com a seguinte pergunta: "Não estou conseguindo receber o código via WhatsApp. Gostaria de ajuda:"
-    - Responda: "Ajudo em algo mais?"  
+  - Não estou conseguindo receber o código via WhatsApp. Gostaria de ajuda
+    - Responda apenas: "Ajudo em algo mais?"  
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 TUTORIAIS DISPONÍVEIS: 
 

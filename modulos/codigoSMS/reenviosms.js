@@ -15,7 +15,8 @@ async function reenvioSMS(firebase, msgFrom) {
     const ref = db.ref(`fotoGeo/validaWhats`);
 
     await ref.child(numero).update({
-        enviadoWhats: false
+        enviadoWhats: false,
+        reenvio: true
     });    
 }
 

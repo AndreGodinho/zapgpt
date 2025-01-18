@@ -1,9 +1,9 @@
-async function codigoSMS(firebase, clientConectaWhatsApp, Buttons) {
-    await consultaNo(firebase, clientConectaWhatsApp, Buttons); // Passe o `db` para a função
+async function codigoSMS(firebase, clientConectaWhatsApp) {
+    await consultaNo(firebase, clientConectaWhatsApp); // Passe o `db` para a função
 }
 
 // Função assíncrona para consultar o nó no Realtime Database
-async function consultaNo(firebase, clientConectaWhatsApp, Buttons) {
+async function consultaNo(firebase, clientConectaWhatsApp) {
     try {
         // Autenticação com email e senha
         await firebase.auth().signInWithEmailAndPassword(
@@ -33,8 +33,8 @@ async function consultaNo(firebase, clientConectaWhatsApp, Buttons) {
                     // if (chave === '65999835474' || chave === '14991888912' || chave === '65993026189') {
                     console.log(`${formatarData(Date.now())} - Enviado WhatsApp para: ${chave} - ${campo.ultimoCodigoSMS}`);
 
-                    await enviarMensagens(clientConectaWhatsApp, telefone2, campo.ultimoCodigoSMS);
-                    await enviarMensagens(clientConectaWhatsApp, telefone1, campo.ultimoCodigoSMS);
+                    await enviarMensagens(clientConectaWhatsApp, telefone2, campo.ultimoCodigoSMS, campo.reenvio);
+                    await enviarMensagens(clientConectaWhatsApp, telefone1, campo.ultimoCodigoSMS, campo.reenvio);
 
                     await ref.child(chave).update({
                         enviadoWhats: true
@@ -63,13 +63,16 @@ function delay(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function enviarMensagens(client, telefone, codigoVerificacao) {
+async function enviarMensagens(client, telefone, codigoVerificacao, isReenvio) {
     const mensagemInicial = `Obrigado por ter baixado o Aplicativo FotoGeo \n\nSe precisar, temos vários tutoriais disponíveis em nosso site: \n\nhttps://www.relatoriofotogeo.com.br/`;
     const mensagemCodigo = `*Segue o código de Verificação:*`;
 
     // Enviar mensagem de agradecimento e link para tutoriais
-    await client.sendMessage(telefone, mensagemInicial);
-    await delay(3000);
+
+    if (!isReenvio) {
+        await client.sendMessage(telefone, mensagemInicial);
+        await delay(3000);
+    }
 
     // Enviar mensagem com o código de verificação
     await client.sendMessage(telefone, mensagemCodigo);

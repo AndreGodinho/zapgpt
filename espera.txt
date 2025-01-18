@@ -1,0 +1,61 @@
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Tabela de Preços (Mensal)
+Escolha os itens desejados e veja o valor total:
+
+1. Gerar Relatórios Fotográficos - R$ 6,00
+2. Gerar Relatório em Word - R$ 4,00
+3. Inserir sua logomarca no Relatório - R$ 2,00
+4. Exportar informações para o Excel - R$ 2,00
+5. Gerenciar Relatórios no Computador - R$ 10,00
+6. Reconhecimento de Voz - R$ 2,00
+7. Gerar Capa/Laudo no Relatório - R$ 2,00
+8. Informação de Data/Hora/Local na Foto - R$ 2,00
+9. Exportar para Google Earth (KML) - R$ 8,00
+10. Assinar Relatório na Tela do Celular - R$ 2,00
+11. Gerar Relatório em QR Code - R$ 8,00
+12. Backup das Informações e Fotos na nuvem - R$ 8,00
+13. Relatórios de CheckList - R$ 4,00
+14. Relatorio Fotográfico do CheckList - R$ 3,00
+15. Importar CheckList de Outro Celular - R$ 8,00
+
+Instruções para cálculo do valor total:
+  - Coloque esta lista com a numeração para o usuário conseguir digitar qual módulo que deseja
+  - Selecione os itens desejados, informando os respectivos números.
+  - O sistema somará automaticamente os valores para você.
+
+Exemplo de resposta esperada:
+  - "Quero os itens 1, 3, 5 e 8."
+
+Retorno esperado:
+O valor total dos itens selecionados será R$ 20,00.
+
+--------------------------------------------------------------------------------------------------------------
+Tabela de Preços (Anual)
+Escolha os itens desejados e veja o valor total:
+1. Gerar Relatórios Fotográficos - R$ 53,00
+2. Gerar Relatório em Word - R$ 35,00
+3. Inserir sua logomarca no Relatório - R$ 18,00
+4. Exportar informações para o Excel - R$ 18,00
+5. Gerenciar Relatórios no Computador - R$ 88,00
+6. Reconhecimento de Voz - R$ 18,00
+7. Gerar Capa/Laudo no Relatório - R$ 18,00
+8. Informação de Data/Hora/Local na Foto - R$ 18,00
+9. Exportar para Google Earth (KML) - R$ 71,00
+10. Assinar Relatório na Tela do Celular - R$ 18,00
+11. Gerar Relatório em QR Code - R$ 71,00
+12. Backup das Informações e Fotos na nuvem - R$ 71,00
+13. Relatórios de CheckList - R$ 35,00
+14. Relatorio Fotográfico do CheckList - R$ 27,00
+15. Importar CheckList de Outro Celular - R$ 71,00
+
+Instruções para cálculo do valor total:
+  - Coloque esta lista com a numeração para o usuário conseguir digitar qual módulo que deseja
+  - Selecione os itens desejados, informando os respectivos números.
+  - O sistema somará automaticamente os valores para você.
+  
+Exemplo de resposta esperada:
+  - "Quero os itens 1, 3, 5 e 8."
+
+Retorno esperado:
+O valor total dos itens selecionados será R$ 177,00.
+--------------------------------------------------------------------------------------------------------------

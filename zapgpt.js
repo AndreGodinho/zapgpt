@@ -402,15 +402,20 @@ function readMap(numeroId) {
 clientConectaWhatsApp.on('message', async msg => {
   const mensagemLivre = msg.body;
 
+  let isResponde = true;
+
   if ((mensagemLivre.toLowerCase().includes('Não estou conseguindo receber o código via WhatsApp. Gostaria de ajuda:'.toLowerCase()) ||
     mensagemLivre.toLowerCase().includes('Estou na tela do envio de código de autenticação via WhatsApp e tenho uma dúvida'.toLowerCase()))) {
-    console.log('mensagem livre', msg.from);
+
+    isResponde = false;
 
     await delay(3000);
     await clientConectaWhatsApp.sendMessage(msg.from, `*FotoGeoIA:*\n\n${'Um momento por favor'}`);
 
     reenvioSMS(firebase, msg.from);
     await delay(5000);
+
+    await clientConectaWhatsApp.sendMessage(msg.from, `*FotoGeoIA:*\n\n${'Ajudo em algo mais?'}`);
   }
   // msg.body !== null para ativar com qualquer coisa
   if (!existsDB(msg.from) &&
@@ -451,6 +456,7 @@ clientConectaWhatsApp.on('message', async msg => {
         // updateChatHistory(msg.from, [{ role: 'system', content: `${fs.readFileSync('prompt.txt', 'utf8')}` }]);
         updateChatHistory(msg.from, [{ role: 'developer', content: `${fs.readFileSync('prompt.txt', 'utf8')}` }]);
       }
+
       updateChatHistory(msg.from, [...readChatHistory(msg.from), { role: 'user', content: `${readCliente(msg.from)}` }]);
       updateZAPGPT(msg.from, await brokerMaster(runZAPGPT, msg, readChatHistory(msg.from)));
       // Enviar a resposta para o usuário
@@ -462,7 +468,9 @@ clientConectaWhatsApp.on('message', async msg => {
         await chat.sendSeen();
         await chat.sendStateTyping();
         await delay(3000); // Mudado aqui 3000
-        await clientConectaWhatsApp.sendMessage(msg.from, `*FotoGeoIA:*\n\n${readZAPGPT(msg.from).content}`);
+        if (isResponde) {
+          await clientConectaWhatsApp.sendMessage(msg.from, `*FotoGeoIA:*\n\n${readZAPGPT(msg.from).content}`);
+        }
         updateFlow(msg.from, 'stepGPT');
         updateInteract(msg.from, 'done');
       }
@@ -574,7 +582,7 @@ clientConectaWhatsApp.on('message_create', async (msg) => {
 });
 
 const codigosms = require('./modulos/codigoSMS/codigosms.js');
-codigosms(firebase, clientConectaWhatsApp, Buttons);
+codigosms(firebase, clientConectaWhatsApp);
 
 const reenvioSMS = require('./modulos/codigoSMS/reenviosms.js');
 
