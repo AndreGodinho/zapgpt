@@ -54,6 +54,7 @@ const clientConectaWhatsApp = new Client({
     headless: true,
     //CAMINHO DO CHROME PARA WINDOWS (REMOVER O COMENTÁRIO ABAIXO)
     executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
+    // executablePath: 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
     //===================================================================================
     // CAMINHO DO CHROME PARA MAC (REMOVER O COMENTÁRIO ABAIXO)
     //executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',

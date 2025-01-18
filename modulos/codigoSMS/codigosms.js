@@ -24,7 +24,7 @@ async function consultaNo(firebase, clientConectaWhatsApp, Buttons) {
                 const chave = snapshot.key; // Nome do nó alterado
                 const campo = snapshot.val(); // Novo valor do nó alterado
 
-                if (!campo.enviadoWhats && campo.onlyDataPrimeiraValidacao >= 1737158400000) { // A partir do dia 18Jan2025
+                if (!campo.enviadoWhats && campo.onlyDataPrimeiraValidacao >= 1737158400000 && campo.ultimoCodigoSMS) { // A partir do dia 18Jan2025
                     // Enviar mensagem usando o clientConectaWhatsApp
                     const telefone1 = `55${chave}@c.us`;
 
@@ -54,8 +54,6 @@ async function consultaNo(firebase, clientConectaWhatsApp, Buttons) {
                         // await delay(3000);
                         // await clientConectaWhatsApp.sendMessage(`5514991888912@c.us`, buttonMessage);
                     } */
-
-
                 } else {
                     console.log(`O código já foi enviado para o WhatsApp: ${chave}`);
                 }
