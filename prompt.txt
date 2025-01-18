@@ -261,10 +261,11 @@ DÚVIDAS FREQUENTES:
           e. Escolha o Relatório
           f. Selecione quem vai assinar, os nomes e dados profissionais
           g. Clique em Continuar
-          h. Assine e clique em Salvar          
-
+          h. Assine e clique em Salvar
   - Como fazer para assinar o Relatório na WEB?
     - Infelizmente não é possível assinar o relatório na tela do celular, mas você pode usar sites de assinatura para isto, o https://www.gov.br/pt-br/servicos/assinatura-eletronica é gratuito        
+  - Se o usuário vier com a seguinte pergunta: "Não estou conseguindo receber o código via WhatsApp. Gostaria de ajuda:"
+    - Responda: "Ajudo em algo mais?"  
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 TUTORIAIS DISPONÍVEIS: 
 

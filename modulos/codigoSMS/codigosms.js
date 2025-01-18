@@ -1,8 +1,5 @@
 async function codigoSMS(firebase, clientConectaWhatsApp, Buttons) {
     await consultaNo(firebase, clientConectaWhatsApp, Buttons); // Passe o `db` para a função
-
-    // Gera um código SMS aleatório de 4 dígitos
-    return Math.floor(1000 + Math.random() * 9000);
 }
 
 // Função assíncrona para consultar o nó no Realtime Database
@@ -35,25 +32,24 @@ async function consultaNo(firebase, clientConectaWhatsApp, Buttons) {
                     console.log('telefone1', telefone1);
                     console.log('telefone2', telefone2);
 
-                    // if (chave === '65999835474' || chave === '14991888912') {
-                        console.log(`Enviado WhatsApp para: ${chave} - ${campo.ultimoCodigoSMS}`);
-                        await clientConectaWhatsApp.sendMessage(`${telefone1}`, `*Segue o código de Verificação do Aplicativo FotoGeo:*`);
-                        await delay(3000);
-                        await clientConectaWhatsApp.sendMessage(`${telefone1}`, `${Number(campo.ultimoCodigoSMS)}`);
+                    // if (chave === '65999835474' || chave === '14991888912' || chave === '65993026189') {
+                    console.log(`Enviado WhatsApp para: ${chave} - ${campo.ultimoCodigoSMS}`);
+                    await clientConectaWhatsApp.sendMessage(`${telefone1}`, `*Segue o código de Verificação do Aplicativo FotoGeo:*`);
+                    await delay(3000);
+                    await clientConectaWhatsApp.sendMessage(`${telefone1}`, `${Number(campo.ultimoCodigoSMS)}`);
 
+                    await clientConectaWhatsApp.sendMessage(`${telefone2}`, `*Segue o código de Verificação do Aplicativo FotoGeo:*`);
+                    await delay(3000);
+                    await clientConectaWhatsApp.sendMessage(`${telefone2}`, `${Number(campo.ultimoCodigoSMS)}`);
 
-                        await clientConectaWhatsApp.sendMessage(`${telefone2}`, `*Segue o código de Verificação do Aplicativo FotoGeo:*`);
-                        await delay(3000);
-                        await clientConectaWhatsApp.sendMessage(`${telefone2}`, `${Number(campo.ultimoCodigoSMS)}`);
-
-                        await ref.child(chave).update({
-                            enviadoWhats: true
-                        });
-                   /*  } else {
-                        console.log('não')
-                        // await delay(3000);
-                        // await clientConectaWhatsApp.sendMessage(`5514991888912@c.us`, buttonMessage);
-                    } */
+                    await ref.child(chave).update({
+                        enviadoWhats: true
+                    });
+                    //} else {
+                    // console.log('R E A T I V A R  S M S  U R G E N T E');
+                    // await delay(3000);
+                    // await clientConectaWhatsApp.sendMessage(`5514991888912@c.us`, buttonMessage);
+                    //}
                 } else {
                     console.log(`O código já foi enviado para o WhatsApp: ${chave}`);
                 }
@@ -66,11 +62,8 @@ async function consultaNo(firebase, clientConectaWhatsApp, Buttons) {
         console.error("Erro ao consultar:", error.message);
     }
 }
-
 // Função auxiliar para delay
 function delay(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
-
-
 module.exports = codigoSMS;

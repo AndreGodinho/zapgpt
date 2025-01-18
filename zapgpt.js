@@ -31,7 +31,7 @@ const firebaseAndreMT = {
 
 // Inicializar Firebase
 if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseAndreMT);  
+  firebase.initializeApp(firebaseAndreMT);
 }
 
 
@@ -400,6 +400,18 @@ function readMap(numeroId) {
 }
 
 clientConectaWhatsApp.on('message', async msg => {
+  const mensagemLivre = msg.body;
+
+  if ((mensagemLivre.toLowerCase().includes('Não estou conseguindo receber o código via WhatsApp. Gostaria de ajuda:'.toLowerCase()) ||
+    mensagemLivre.toLowerCase().includes('Estou na tela do envio de código de autenticação via WhatsApp e tenho uma dúvida'.toLowerCase()))) {
+    console.log('mensagem livre', msg.from);
+
+    await delay(3000);
+    await clientConectaWhatsApp.sendMessage(msg.from, `*FotoGeoIA:*\n\n${'Um momento por favor'}`);
+
+    reenvioSMS(firebase, msg.from);
+    await delay(5000);
+  }
   // msg.body !== null para ativar com qualquer coisa
   if (!existsDB(msg.from) &&
 
@@ -410,6 +422,8 @@ clientConectaWhatsApp.on('message', async msg => {
       msg.body.toLowerCase().includes("Estou com dúvidas referente ao Aplicativo FotoGeo".toLowerCase()) ||
       msg.body.toLowerCase().includes("Dúvidas a respeito do Aplicativo Relatório FotoGEO".toLowerCase()) ||
       msg.body.toLowerCase().includes("Gostaria de tirar uma dúvida, fazer uma reclamação ou dar uma sugestão referente ao Aplicativo FotoGeo".toLowerCase()) ||
+      msg.body.toLowerCase().includes("Não estou conseguindo receber o código via WhatsApp. Gostaria de ajuda:".toLowerCase()) ||
+      msg.body.toLowerCase().includes("Estou na tela do envio de código de autenticação via WhatsApp e tenho uma dúvida".toLowerCase()) ||
       msg.body.toLowerCase().includes("expirou e gostaria de fazer a seguinte pergunta:".toLowerCase())) &&
 
     msg.from.endsWith('@c.us') && !msg.hasMedia) {
@@ -419,6 +433,7 @@ clientConectaWhatsApp.on('message', async msg => {
   //Bloco do Agente GPT
   if (existsDB(msg.from) && msg.body !== null && readFlow(msg.from) === 'stepGPT' && readId(msg.from) !== JSON.stringify(msg.id.id) && readInteract(msg.from) === 'done' && msg.from.endsWith('@c.us')) {
     let mensagem = await processMessage(msg);
+    console.log('mensagem', mensagem);
 
     if (mensagem === 'Desculpe, mas ainda não consigo processar mensagens de áudio/video/fotos.') {
       mensagem += '\n\nEm breve um de nossos atendentes irá lhe responder.';
@@ -453,6 +468,7 @@ clientConectaWhatsApp.on('message', async msg => {
       }
     }
   }
+
 
 });
 
@@ -558,7 +574,9 @@ clientConectaWhatsApp.on('message_create', async (msg) => {
 });
 
 const codigosms = require('./modulos/codigoSMS/codigosms.js');
-const mensagem = codigosms(firebase, clientConectaWhatsApp, Buttons);
+codigosms(firebase, clientConectaWhatsApp, Buttons);
+
+const reenvioSMS = require('./modulos/codigoSMS/reenviosms.js');
 
 
 /* if (msg.hasMedia) {
