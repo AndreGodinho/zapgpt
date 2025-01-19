@@ -37,7 +37,8 @@ if (!firebase.apps.length) {
 
 // Variáveis do seu modelo
 
-const modelo = "gpt-3.5-turbo-1106"; //Modelo escolhido para a sua IA
+// const modelo = "gpt-3.5-turbo-1106"; //Modelo escolhido para a sua IA
+const modelo = "gpt-4-turbo-2024-04-09"; //Modelo escolhido para a sua IA
 const temperatura = 1; //Temperatura da sua IA
 const DATABASE_FILE = 'zapgptdb.json'; //Banco de dados da sua IA
 const sessao = 'zapgpt';
@@ -430,6 +431,8 @@ clientConectaWhatsApp.on('message', async msg => {
       msg.body.toLowerCase().includes("Gostaria de tirar uma dúvida, fazer uma reclamação ou dar uma sugestão referente ao Aplicativo FotoGeo".toLowerCase()) ||
       msg.body.toLowerCase().includes("Não estou conseguindo receber o código via WhatsApp. Gostaria de ajuda:".toLowerCase()) ||
       msg.body.toLowerCase().includes("Estou na tela do envio de código de autenticação via WhatsApp e tenho uma dúvida".toLowerCase()) ||
+      msg.body.toLowerCase().includes("Estou gerando meu Relatório, mas estou tendo problemas".toLowerCase()) ||
+      msg.body.toLowerCase().includes("Estou tentando adquirir módulos do Aplicativo FotoGeo via PIX e não estou conseguindo".toLowerCase()) ||
       msg.body.toLowerCase().includes("#IA Atender#".toLowerCase()) ||
       msg.body.toLowerCase().includes("#FotoGeo Atender#".toLowerCase()) ||
       msg.body.toLowerCase().includes("expirou e gostaria de fazer a seguinte pergunta:".toLowerCase())) &&

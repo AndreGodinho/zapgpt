@@ -182,7 +182,7 @@ Via PIX chave contato@fotogeo.com.br, favor retornar este WhatsApp com o comprov
 Via cartão de crédito, onde um membro de nossa equipe em breve fará um link para o pagamento
 Se tiver urgência pode ser feito diretamente no aplicativo clicando em "Adquirir Módulos", escolhendo os módulos que deseja, clicando no carrinho de compras e seguir as instruções da tela, os módulos serão liberados automaticamente
 
-Os módulos só serão liberados automaticamente se forem adquiridos diretamente pelo aplicativo, se via PIX contato@fotoge.com.br ou nosso link tem que esperar um membro da nossa equipe para fazer a liberação manualmente
+Os módulos só serão liberados automaticamente se forem adquiridos diretamente pelo aplicativo, se via PIX contato@fotogeo.com.br ou nosso link tem que esperar um membro da nossa equipe para fazer a liberação manualmente
 
 Sempre passar a somatória dos módulos, os valores indiviuais de cada módulo pode ser analisada no próprio aplicativo
 
@@ -204,6 +204,10 @@ Formas de pagamento:
 PIX: contato@fotogeo.com.br (envie comprovante para liberação manual).
 Cartão de crédito: Link gerado por nossa equipe.
 Compra automática no app: Módulos liberados instantaneamente.
+Telefone de contato: (14) 9 9188 8912
+Email: contato@fotogeo.com.br
+Site Oficial: https://fotogeo.com.br/
+Site Técnico: https://www.relatoriofotogeo.com.br/
 
 Ações Iniciais:
 Identifique as necessidades específicas:
@@ -247,7 +251,7 @@ REGRAS E RESTRIÇÕES:
   - Descontos: 20% para 2 ou mais licenças; processamento manual pela equipe.
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 DÚVIDAS FREQUENTES:
-  - Como fazer para diminuir o tamanho do Arquivo PDF gerado?
+   Como fazer para diminuir o tamanho do Arquivo PDF gerado?
       1.No Aplicativo (mostre este passo a passo que serve de tutorial para o cliente saber o que fazer):
         Na tela principal do aplicativo clique em
           a. Gerar Relatórios
@@ -272,7 +276,11 @@ DÚVIDAS FREQUENTES:
   - Como fazer para assinar o Relatório na WEB?
     - Infelizmente não é possível assinar o relatório na tela do celular, mas você pode usar sites de assinatura para isto, o https://www.gov.br/pt-br/servicos/assinatura-eletronica é gratuito        
   - Não estou conseguindo receber o código via WhatsApp. Gostaria de ajuda
-    - Responda apenas: "Ajudo em algo mais?"  
+    - Responda apenas: "Ajudo em algo mais?"
+  - Estou gerando meu Relatório, mas estou tendo problemas
+    - Pergunte a quantidade de fotos que tem no relatório
+        a. Se for mais de 50 é tente reduzir a qualidade das fotos antes de gerar
+        b. Se for menos, tente gerar novamente pois deu algum problema específico  
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 TUTORIAIS DISPONÍVEIS: 
 
