@@ -1,4 +1,4 @@
-Versão 18Jan2025-21h24
+Versão 18Jan2025-21h34
     Resolvido o bug que não reenviava o código para usuários cadastrados antes de 18/01/2025
     Colocado horário e telefone na mensagem para facilitar a visualização
 

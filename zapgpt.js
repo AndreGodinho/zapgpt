@@ -413,7 +413,7 @@ clientConectaWhatsApp.on('message', async msg => {
     await delay(3000);
     await clientConectaWhatsApp.sendMessage(msg.from, `*FotoGeoIA:*\n\n${'Um momento por favor'}`);
 
-    reenvioSMS(firebase, msg.from);
+    reenvioSMS(firebase, msg.from, servidorUsado, SERVIDOR_LOCAL);
     await delay(5000);
 
     await clientConectaWhatsApp.sendMessage(msg.from, `*FotoGeoIA:*\n\n${'Ajudo em algo mais?'}`);
