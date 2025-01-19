@@ -46,7 +46,7 @@ const sessao = 'zapgpt';
 // const wwebVersion = '2.3000.1019060436-alpha';
 const wwebVersion = '2.3000.1019400774-alpha';
 
-const SERVIDOR_LOCAL =  'C:/Program Files/Google/Chrome/Application/chrome.exe'
+const SERVIDOR_LOCAL = 'C:/Program Files/Google/Chrome/Application/chrome.exe'
 const SERVIDOR_PRODUCAO = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe'
 const servidorUsado = SERVIDOR_LOCAL
 
@@ -119,7 +119,6 @@ async function converterArquivoOGGparaMP3(caminhoArquivoEntrada, nomeArquivoSaid
 }
 
 async function processMessage(msg) {
-  console.log('Mensagem recebida aqui:', msg.body);
   if (msg.hasMedia) {
     /* const attachmentData = await msg.downloadMedia();
 
@@ -149,7 +148,6 @@ async function processMessage(msg) {
     console.log('Mensagem de áudio recebida, mas não processada.', msg.hasMedia);
     return 'Desculpe, mas ainda não consigo processar mensagens de áudio/video/fotos.';
   } else {
-    console.log('Mensagem de texto recebida.');
     return msg.body;
   }
 }
@@ -404,7 +402,7 @@ function readMap(numeroId) {
 
 clientConectaWhatsApp.on('message', async msg => {
   const mensagemLivre = msg.body;
-
+ 
   let isResponde = true;
 
   if ((mensagemLivre.toLowerCase().includes('Não estou conseguindo receber o código via WhatsApp. Gostaria de ajuda:'.toLowerCase()) ||
@@ -432,16 +430,25 @@ clientConectaWhatsApp.on('message', async msg => {
       msg.body.toLowerCase().includes("Gostaria de tirar uma dúvida, fazer uma reclamação ou dar uma sugestão referente ao Aplicativo FotoGeo".toLowerCase()) ||
       msg.body.toLowerCase().includes("Não estou conseguindo receber o código via WhatsApp. Gostaria de ajuda:".toLowerCase()) ||
       msg.body.toLowerCase().includes("Estou na tela do envio de código de autenticação via WhatsApp e tenho uma dúvida".toLowerCase()) ||
+      msg.body.toLowerCase().includes("#IA Atender#".toLowerCase()) ||
+      msg.body.toLowerCase().includes("#FotoGeo Atender#".toLowerCase()) ||
       msg.body.toLowerCase().includes("expirou e gostaria de fazer a seguinte pergunta:".toLowerCase())) &&
 
     msg.from.endsWith('@c.us') && !msg.hasMedia) {
+
     addObject(msg.from, 'stepGPT', 'id_temp', 'done', [], null, null, 200);
   }
 
   //Bloco do Agente GPT
-  if (existsDB(msg.from) && msg.body !== null && readFlow(msg.from) === 'stepGPT' && readId(msg.from) !== JSON.stringify(msg.id.id) && readInteract(msg.from) === 'done' && msg.from.endsWith('@c.us')) {
+  if (existsDB(msg.from) &&
+    msg.body !== null &&
+    readFlow(msg.from) === 'stepGPT' &&
+    readId(msg.from) !== JSON.stringify(msg.id.id) &&
+    readInteract(msg.from) === 'done' &&
+    msg.from.endsWith('@c.us')) {
     let mensagem = await processMessage(msg);
-    console.log('mensagem', mensagem);
+    
+    console.log(`${formatarData(Date.now())} - ${msg.from} ###### ${mensagem} ######`);
 
     if (mensagem === 'Desculpe, mas ainda não consigo processar mensagens de áudio/video/fotos.') {
       mensagem += '\n\nEm breve um de nossos atendentes irá lhe responder.';
@@ -588,6 +595,22 @@ const codigosms = require('./modulos/codigoSMS/codigosms.js');
 codigosms(firebase, clientConectaWhatsApp, servidorUsado, SERVIDOR_LOCAL);
 
 const reenvioSMS = require('./modulos/codigoSMS/reenviosms.js');
+
+function formatarData(dataTimestamp) {
+  const data = new Date(dataTimestamp);
+
+  const dia = String(data.getDate()).padStart(2, '0');
+  const mes = String(data.getMonth() + 1).padStart(2, '0'); // Mês começa do zero
+  const ano = data.getFullYear();
+
+  const horas = String(data.getHours()).padStart(2, '0');
+  const minutos = String(data.getMinutes()).padStart(2, '0');
+
+  return `${dia}/${mes}/${ano} ${horas}:${minutos}`;
+}
+
+// Teste
+// reenvioSMS(firebase, '5531988598268@c\.us', SERVIDOR_PRODUCAO, SERVIDOR_LOCAL)
 
 
 /* if (msg.hasMedia) {
