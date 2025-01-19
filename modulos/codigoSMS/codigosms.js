@@ -40,7 +40,8 @@ async function codigoSMS(firebase, clientConectaWhatsApp, servidorUsado, SERVIDO
                         await enviarMensagens(clientConectaWhatsApp, telefone1, campo.ultimoCodigoSMS, campo.reenvio);
 
                         await ref.child(chave).update({
-                            enviadoWhats: true
+                            enviadoWhats: true,
+                            reenvio: false
                         });
                     } else {
                         console.log(`${formatarData(Date.now())} - R E A T I V A R  S M S  U R G E N T E`);
