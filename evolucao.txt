@@ -1,3 +1,7 @@
+Versão 20Jan2025-13h03
+    Acrescentado Fotos antigas para acionar o aplicativo
+    Colocado controle para ver o motivo de uma excessão
+
 Versão 19Jan2025-14h10
     Colocado os dados para contato
     Acrescentado dúvidas de Gerar Relatório

@@ -2,7 +2,7 @@
   {
     "numeroId": "5514991888912@c.us",
     "flowState": "stepGPT",
-    "id": "\"64A22BBEC0BB3EBE6A2D56F45EFEE25A\"",
+    "id": "\"3EB016D1088ACBA3434DA4\"",
     "interact": "done",
     "chathistory": [
       {
@@ -11,58 +11,18 @@
       },
       {
         "role": "user",
-        "content": "Estou gerando meu Relatório, mas estou tendo problemas. Poderia me ajudar? Meu ID 1778_4173"
+        "content": "Precisava recuperar várias fotos antigas"
       },
       {
         "role": "assistant",
-        "content": "Claro! Quantas fotos você está tentando incluir em seu relatório?"
-      },
-      {
-        "role": "user",
-        "content": "Cerca de 69"
-      },
-      {
-        "role": "assistant",
-        "content": "Para relatórios com mais de 50 fotos, recomendo reduzir a qualidade das imagens para evitar problemas. Ajuste a qualidade para algo entre 60% e 80% e tente gerar novamente."
-      },
-      {
-        "role": "user",
-        "content": "Onde faço isto?"
-      },
-      {
-        "role": "assistant",
-        "content": "Siga estes passos no aplicativo para ajustar a qualidade das fotos:\n\n1. Na tela principal, clique em \"Gerar Relatórios\".\n2. Selecione \"Gerar Relatório\".\n3. Role a tela para baixo e diminua a qualidade das fotos (100% é o máximo e 20% é o mínimo).\n4. Clique em \"Gerar\".\n5. Escolha o Relatório e verifique se a qualidade está adequada às suas necessidades."
-      },
-      {
-        "role": "user",
-        "content": "Estou tentando adquirir módulos do Aplicativo FotoGeo via PIX e não estou conseguindo. Gostaria de ajuda:\n\n Meu ID: 1778_4173"
-      },
-      {
-        "role": "assistant",
-        "content": "Para realizar o pagamento via PIX, use a chave contato@fotogeo.com.br. Após efetuar o pagamento, envie o comprovante para este WhatsApp para que possamos realizar a liberação manual dos módulos que deseja adquirir."
-      },
-      {
-        "role": "user",
-        "content": "Quanto tempo leva a liberação?"
-      },
-      {
-        "role": "assistant",
-        "content": "Após recebermos o comprovante do PIX, a liberação manual dos módulos geralmente é feita em até 24 horas em dias úteis. Se precisar de assistência durante o processo, estou à disposição!"
-      },
-      {
-        "role": "user",
-        "content": "Tem um jeito mais rápido?"
-      },
-      {
-        "role": "assistant",
-        "content": "Sim, para uma liberação imediata, você pode adquirir os módulos diretamente pelo aplicativo. Basta seguir estes passos:\n- Vá para a tela principal do Aplicativo.\n- Clique no Botão \"Adquirir Módulos\".\n- Escolha os módulos desejados, adicione ao carrinho e complete a compra."
+        "content": "Nosso aplicativo é voltado para a geração de relatórios fotográficos em PDF e não possui funcionalidade para recuperação de fotos antigas. Ajudo em algo mais?"
       }
     ],
     "zapgpt": {
       "role": "assistant",
-      "content": "Sim, para uma liberação imediata, você pode adquirir os módulos diretamente pelo aplicativo. Basta seguir estes passos:\n- Vá para a tela principal do Aplicativo.\n- Clique no Botão \"Adquirir Módulos\".\n- Escolha os módulos desejados, adicione ao carrinho e complete a compra.",
+      "content": "Nosso aplicativo é voltado para a geração de relatórios fotográficos em PDF e não possui funcionalidade para recuperação de fotos antigas. Ajudo em algo mais?",
       "refusal": null
     },
-    "cliente": "Tem um jeito mais rápido?"
+    "cliente": "Precisava recuperar várias fotos antigas"
   }
 ]

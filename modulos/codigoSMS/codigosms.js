@@ -72,9 +72,9 @@ async function enviarMensagens(client, telefone, codigoVerificacao, isReenvio) {
     const mensagemInicial = `Obrigado por ter baixado o Aplicativo FotoGeo \n\nSe precisar, temos vários tutoriais disponíveis em nosso site: \n\nhttps://www.relatoriofotogeo.com.br/`;
     const mensagemCodigo = `*Segue o código de Verificação:*`;
 
-    // Enviar mensagem de agradecimento e link para tutoriais
 
     if (!isReenvio) {
+        console.log(`${formatarData(Date.now())} - Telefone envio: ${telefone} - ${mensagemInicial}`);
         await client.sendMessage(telefone, mensagemInicial);
         await delay(3000);
     }
