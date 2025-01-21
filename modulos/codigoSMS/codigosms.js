@@ -20,23 +20,28 @@ async function codigoSMS(firebase, clientConectaWhatsApp, servidorUsado, SERVIDO
                 if ((!campo.enviadoWhats && campo.onlyDataPrimeiraValidacao >= 1737158400000 && campo.ultimoCodigoSMS) || campo.reenvio) { // A partir do dia 18Jan2025
                     // Enviar mensagem usando o clientConectaWhatsApp
                     const telefone1 = `55${chave}@c.us`;
+                    let telefone2 = '';
 
-                    // Remove o primeiro "9" após os dois primeiros dígitos do código de área
-                    const chaveSemPrimeiro9 = chave.toString().replace(/^(\d{2})(9)/, '$1');
+                    if (chave.length == 11) {
+                        // Remove o primeiro "9" após os dois primeiros dígitos do código de área
+                        const chaveSemPrimeiro9 = chave.toString().replace(/^(\d{2})(9)/, '$1');
 
-                    const telefone2 = `55${chaveSemPrimeiro9}@c.us`; // Concatena com "55" e "@c.us"
+                        telefone2 = `55${chaveSemPrimeiro9}@c.us`; // Concatena com "55" e "@c.us"
+                    }
 
                     let isEnviaMensagem = true;
                     if (servidorUsado === SERVIDOR_LOCAL) {
-                        if (chave !== '65999835474' && chave !== '14991888912' && chave !== '65993026189') {
+                        if (chave !== '65999835474' && chave !== '14991888912' && chave !== '65993026189' && chave !== '6593026189') {
                             isEnviaMensagem = false;
                         }
-                    } 
+                    }
 
                     if (isEnviaMensagem) {
                         console.log(`${formatarData(Date.now())} - Enviado WhatsApp para: ${chave} - ${campo.ultimoCodigoSMS}`);
 
-                        await enviarMensagens(clientConectaWhatsApp, telefone2, campo.ultimoCodigoSMS, campo.reenvio);
+                        if (telefone2) {
+                            await enviarMensagens(clientConectaWhatsApp, telefone2, campo.ultimoCodigoSMS, campo.reenvio);
+                        }
                         await enviarMensagens(clientConectaWhatsApp, telefone1, campo.ultimoCodigoSMS, campo.reenvio);
 
                         await ref.child(chave).update({

@@ -1,5 +1,8 @@
+Versão 21Jan2025-13h05
+    Ajustado envio de WhatsApp para telefone com menos de 11 digitos
+
 Versão 20Jan2025-13h03
-    Acrescentado Fotos antigas para acionar o aplicativo
+    Acrescentado "Fotos antigas" para acionar o aplicativo
     Colocado controle para ver o motivo de uma excessão
 
 Versão 19Jan2025-14h10

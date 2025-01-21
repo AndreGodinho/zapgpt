@@ -2,7 +2,7 @@
   {
     "numeroId": "5514991888912@c.us",
     "flowState": "stepGPT",
-    "id": "\"3EB016D1088ACBA3434DA4\"",
+    "id": "\"3EB06330C92C7873CF53D5\"",
     "interact": "done",
     "chathistory": [
       {
@@ -16,13 +16,61 @@
       {
         "role": "assistant",
         "content": "Nosso aplicativo é voltado para a geração de relatórios fotográficos em PDF e não possui funcionalidade para recuperação de fotos antigas. Ajudo em algo mais?"
+      },
+      {
+        "role": "user",
+        "content": "*FotoGeoIA:*\n\nUm momento por favor"
+      },
+      {
+        "role": "assistant",
+        "content": "Claro! Fique à vontade para informar quando estiver pronto para continuar ou se precisar de mais informação. Estou à disposição!"
+      },
+      {
+        "role": "user",
+        "content": "*FotoGeoIA:*\n\nAjudo em algo mais?"
+      },
+      {
+        "role": "assistant",
+        "content": "Sim, claro! Como posso ajudá-lo hoje? Você precisa de informações sobre algum dos nossos módulos ou tem alguma dúvida específica sobre o aplicativo?"
+      },
+      {
+        "role": "user",
+        "content": "*FotoGeoIA:*\n\nAjudo em algo mais?"
+      },
+      {
+        "role": "assistant",
+        "content": "Sim, como posso ajudá-lo hoje? Precisa de informações sobre algum dos nossos módulos ou tem alguma outra dúvida?"
+      },
+      {
+        "role": "user",
+        "content": "*FotoGeoIA:*\n\nAjudo em algo mais?"
+      },
+      {
+        "role": "assistant",
+        "content": "Parece que estamos em um loop! 😊 Se houver algo mais com que eu possa ajudar, por favor, informe qual é a sua dúvida ou necessidade. Se não, tenha um ótimo dia!"
+      },
+      {
+        "role": "user",
+        "content": "*FotoGeoIA:*\n\nAjudo em algo mais?"
+      },
+      {
+        "role": "assistant",
+        "content": "Sim, estou aqui para ajudar! Por favor, me diga como posso assisti-lo melhor. Tem alguma dúvida específica ou precisa de informações adicionais sobre algum de nossos módulos ou serviços?"
+      },
+      {
+        "role": "user",
+        "content": "*FotoGeoIA:*\n\nAjudo em algo mais?"
+      },
+      {
+        "role": "assistant",
+        "content": "Claro, estou aqui para ajudar! Se houver mais alguma coisa que você queira saber, seja sobre os módulos ou qualquer outro aspecto do aplicativo, só me avisar!"
       }
     ],
     "zapgpt": {
       "role": "assistant",
-      "content": "Nosso aplicativo é voltado para a geração de relatórios fotográficos em PDF e não possui funcionalidade para recuperação de fotos antigas. Ajudo em algo mais?",
+      "content": "Claro, estou aqui para ajudar! Se houver mais alguma coisa que você queira saber, seja sobre os módulos ou qualquer outro aspecto do aplicativo, só me avisar!",
       "refusal": null
     },
-    "cliente": "Precisava recuperar várias fotos antigas"
+    "cliente": "*FotoGeoIA:*\n\nAjudo em algo mais?"
   }
 ]
