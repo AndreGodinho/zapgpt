@@ -281,8 +281,14 @@ DÚVIDAS FREQUENTES:
     - Pergunte a quantidade de fotos que tem no relatório
         a. Se for mais de 50 é tente reduzir a qualidade das fotos antes de gerar
         b. Se for menos, tente gerar novamente pois deu algum problema específico  
-   - Como faço o login pelo computador
+  - Como faço o login pelo computador
 	    a. Para acessar as informações do aplicativo no computador é necessário usar o passo a passo do tutorial a seguir: https://www.relatoriofotogeo.com.br/gerenciar-dados-na-web
+  - Existe credenciais de acesso no Computador?
+      As credenciais são pegas no próprio aplicativo clicando na tela principal do aplicativo clique em:
+        a. Nuvem
+        b. Gerenciar Relatórios via WEB, nesta tela informa as suas credenciais exclusivas para acesso, no tutorial https://www.relatoriofotogeo.com.br/gerenciar-dados-na-web tem o passo a passo
+
+            
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 TUTORIAIS DISPONÍVEIS: 
 
