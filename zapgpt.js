@@ -403,7 +403,7 @@ function readMap(numeroId) {
 
 clientConectaWhatsApp.on('message', async msg => {
   const mensagemLivre = msg.body;
- 
+
   let isResponde = true;
 
   if ((mensagemLivre.toLowerCase().includes('Não estou conseguindo receber o código via WhatsApp. Gostaria de ajuda:'.toLowerCase()) ||
@@ -453,13 +453,14 @@ clientConectaWhatsApp.on('message', async msg => {
     readInteract(msg.from) === 'done' &&
     msg.from.endsWith('@c.us')) {
     let mensagem = await processMessage(msg);
-    
+
     console.log(`${formatarData(Date.now())} - ${msg.from} ###### ${mensagem} ######`);
 
     if (mensagem === 'Desculpe, mas ainda não consigo processar mensagens de áudio/video/fotos.') {
       mensagem += '\n\nEm breve um de nossos atendentes irá lhe responder.';
       await delay(3000);
-      await clientConectaWhatsApp.sendMessage(msg.from, `*FotoGeoIA:*\n\n${mensagem}`);
+      // await clientConectaWhatsApp.sendMessage(msg.from, `*FotoGeoIA:*\n\n${mensagem}`);
+      await envioMensagens(msg.from, `*FotoGeoIA:*\n\n${mensagem}`, false, clientConectaWhatsApp, servidorUsado, SERVIDOR_LOCAL)
     } else {
       // Atualizar o status de digitação e outros dados relevantes
       updateInteract(msg.from, 'typing');
@@ -485,7 +486,8 @@ clientConectaWhatsApp.on('message', async msg => {
         await chat.sendStateTyping();
         await delay(3000); // Mudado aqui 3000
         if (isResponde) {
-          await clientConectaWhatsApp.sendMessage(msg.from, `*FotoGeoIA:*\n\n${readZAPGPT(msg.from).content}`);
+          // await clientConectaWhatsApp.sendMessage(msg.from, `*FotoGeoIA:*\n\n${readZAPGPT(msg.from).content}`);
+          await envioMensagens(msg.from, `*FotoGeoIA:*\n\n${readZAPGPT(msg.from).content}`, false, clientConectaWhatsApp, servidorUsado, SERVIDOR_LOCAL)
         }
         updateFlow(msg.from, 'stepGPT');
         updateInteract(msg.from, 'done');
@@ -597,10 +599,11 @@ clientConectaWhatsApp.on('message_create', async (msg) => {
   }
 });
 
-const codigosms = require('./modulos/codigoSMS/codigosms.js');
-codigosms(firebase, clientConectaWhatsApp, servidorUsado, SERVIDOR_LOCAL);
-
+const codigosms = require('./modulos/codigoSMS/codigosms.js')
 const reenvioSMS = require('./modulos/codigoSMS/reenviosms.js');
+const envioMensagens = require('./modulos/envioMensagens/envioMensagens.js');
+
+codigosms(firebase, clientConectaWhatsApp, servidorUsado, SERVIDOR_LOCAL, envioMensagens);
 
 function formatarData(dataTimestamp) {
   const data = new Date(dataTimestamp);

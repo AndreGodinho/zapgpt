@@ -1,5 +1,5 @@
 // Função assíncrona para consultar o nó no Realtime Database
-async function codigoSMS(firebase, clientConectaWhatsApp, servidorUsado, SERVIDOR_LOCAL) {
+async function codigoSMS(firebase, clientConectaWhatsApp, servidorUsado, SERVIDOR_LOCAL, envioMensagens) {
     try {
         // Autenticação com email e senha
         await firebase.auth().signInWithEmailAndPassword(
@@ -40,9 +40,9 @@ async function codigoSMS(firebase, clientConectaWhatsApp, servidorUsado, SERVIDO
                         console.log(`${formatarData(Date.now())} - Enviado WhatsApp para: ${chave} - ${campo.ultimoCodigoSMS}`);
 
                         if (telefone2) {
-                            await enviarMensagens(clientConectaWhatsApp, telefone2, campo.ultimoCodigoSMS, campo.reenvio);
+                            await enviarMensagens(clientConectaWhatsApp, telefone2, campo.ultimoCodigoSMS, campo.reenvio, envioMensagens, servidorUsado, SERVIDOR_LOCAL);
                         }
-                        await enviarMensagens(clientConectaWhatsApp, telefone1, campo.ultimoCodigoSMS, campo.reenvio);
+                        await enviarMensagens(clientConectaWhatsApp, telefone1, campo.ultimoCodigoSMS, campo.reenvio, envioMensagens, servidorUsado, SERVIDOR_LOCAL);
 
                         await ref.child(chave).update({
                             enviadoWhats: true,
@@ -73,23 +73,26 @@ function delay(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function enviarMensagens(client, telefone, codigoVerificacao, isReenvio) {
+async function enviarMensagens(clientConectaWhatsApp, telefone, codigoVerificacao, isReenvio, envioMensagens, servidorUsado, SERVIDOR_LOCAL) {
     const mensagemInicial = `Obrigado por ter baixado o Aplicativo FotoGeo \n\nSe precisar, temos vários tutoriais disponíveis em nosso site: \n\nhttps://www.relatoriofotogeo.com.br/`;
     const mensagemCodigo = `*Segue o código de Verificação:*`;
 
 
     if (!isReenvio) {
         console.log(`${formatarData(Date.now())} - Telefone envio: ${telefone} - ${mensagemInicial}`);
-        await client.sendMessage(telefone, mensagemInicial);
+        // await client.sendMessage(telefone, mensagemInicial);
+        await envioMensagens(telefone, mensagemInicial, true, clientConectaWhatsApp, servidorUsado, SERVIDOR_LOCAL)
         await delay(3000);
     }
 
     // Enviar mensagem com o código de verificação
-    await client.sendMessage(telefone, mensagemCodigo);
+    // await clientConectaWhatsApp.sendMessage(telefone, mensagemCodigo);
+    await envioMensagens(telefone, mensagemCodigo, true, clientConectaWhatsApp, servidorUsado, SERVIDOR_LOCAL)
 
     // Aguardar 3 segundos antes de enviar o código
     await delay(3000);
-    await client.sendMessage(telefone, String(codigoVerificacao));
+    // await clientConectaWhatsApp.sendMessage(telefone, String(codigoVerificacao));
+    await envioMensagens(telefone, String(codigoVerificacao), true, clientConectaWhatsApp, servidorUsado, SERVIDOR_LOCAL)
 }
 
 function formatarData(dataTimestamp) {
