@@ -16,10 +16,10 @@ async function codigoSMS(firebase, clientConectaWhatsApp, servidorUsado, SERVIDO
             if (snapshot.exists()) {
                 const chave = snapshot.key; // Nome do nó alterado
                 const campo = snapshot.val(); // Novo valor do nó alterado
+                const telefone1 = `55${chave}@c.us`;
 
                 if ((!campo.enviadoWhats && campo.onlyDataPrimeiraValidacao >= 1737158400000 && campo.ultimoCodigoSMS) || campo.reenvio) { // A partir do dia 18Jan2025
-                    // Enviar mensagem usando o clientConectaWhatsApp
-                    const telefone1 = `55${chave}@c.us`;
+                    // Enviar mensagem usando o clientConectaWhatsApp                    
                     let telefone2 = '';
 
                     if (chave.length == 11) {
@@ -48,15 +48,14 @@ async function codigoSMS(firebase, clientConectaWhatsApp, servidorUsado, SERVIDO
                             enviadoWhats: true,
                             reenvio: false
                         });
+
+                        await detectarTelefone(clientConectaWhatsApp, telefone1, envioMensagens, servidorUsado, SERVIDOR_LOCAL);
                     } else {
                         console.log(`${formatarData(Date.now())} - R E A T I V A R  S M S  U R G E N T E`);
-                    }
-                    // await delay(3000);
-                    // await clientConectaWhatsApp.sendMessage(`5514991888912@c.us`, buttonMessage);
-                    //}
+                    }                    
                 } else {
                     if (campo.enviadoWhats) {
-                        console.log(`${formatarData(Date.now())} - O código já foi enviado para o WhatsApp: ${chave}`);
+                        console.log(`${formatarData(Date.now())} - O código já foi enviado para o WhatsApp: ${chave}`);                        
                     }
                 }
             } else {
@@ -92,7 +91,7 @@ async function enviarMensagens(clientConectaWhatsApp, telefone, codigoVerificaca
     // Aguardar 3 segundos antes de enviar o código
     await delay(3000);
     // await clientConectaWhatsApp.sendMessage(telefone, String(codigoVerificacao));
-    await envioMensagens(telefone, String(codigoVerificacao), true, clientConectaWhatsApp, servidorUsado, SERVIDOR_LOCAL)
+    await envioMensagens(telefone, String(codigoVerificacao), true, clientConectaWhatsApp, servidorUsado, SERVIDOR_LOCAL)    
 }
 
 function formatarData(dataTimestamp) {
@@ -107,5 +106,49 @@ function formatarData(dataTimestamp) {
 
     return `${dia}/${mes}/${ano} ${horas}:${minutos}`;
 }
+
+const listaTelefones = [
+    '5515998560250@c.us',
+    '5514998570616@c.us',
+    '5515998580789@c.us',
+    '5515998581069@c.us',
+    '5514997441099@c.us',
+    '5515998571189@c.us',
+    '551998341710@c.us',
+    '5517981322280@c.us',
+    '5514998432365@c.us',
+    '5515998562975@c.us',
+    '5515998593450@c.us',
+    '5515997573988@c.us',
+    '5514998994315@c.us',
+    '5515998554498@c.us',
+    '5515997754606@c.us',
+    '5515998564937@c.us',
+    '5515997105144@c.us',
+    '5519981835357@c.us',
+    '5515998565414@c.us',
+    '5515997215902@c.us',
+    '5515998556479@c.us',
+    '5511983826595@c.us',
+    '5514997937004@c.us',
+    '5515998547269@c.us',
+    '5515998567613@c.us',
+    '5514997087812@c.us',
+    '5514996178056@c.us',
+    '5516992678404@c.us',
+    '5515996038567@c.us',
+    '5519991319182@c.us',
+    '5515998089781@c.us',
+    '5565993026189@c.us'
+];
+
+async function detectarTelefone(clientConectaWhatsApp, telefone, envioMensagens, servidorUsado, SERVIDOR_LOCAL) {
+    if (listaTelefones.includes(telefone)) {
+        const telefoneAvisar='556599835474@c.us'
+        await delay(3000);
+        await envioMensagens(telefoneAvisar, `Telefone ${telefone} detectado como da JCR`, true, clientConectaWhatsApp, servidorUsado, SERVIDOR_LOCAL)
+    }
+}
+
 
 module.exports = codigoSMS;

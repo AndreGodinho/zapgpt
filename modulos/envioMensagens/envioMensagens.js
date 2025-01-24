@@ -6,7 +6,7 @@ async function envioMensagens(msgFrom, mensagem, isMostra, clientConectaWhatsApp
 
     let isEnviaMensagem = true;
     if (servidorUsado === SERVIDOR_LOCAL) {
-        if (msgFrom !== '5565999835474@c.us' && msgFrom !== '5514991888912@c.us' && msgFrom !== '556593026189@c.us') {
+        if (msgFrom !== '5565999835474@c.us' && msgFrom !== '5514991888912@c.us' && msgFrom !== '556593026189@c.us' && msgFrom !== '556599835474@c.us') {
             isEnviaMensagem = false;
         }
     }
