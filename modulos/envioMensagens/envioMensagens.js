@@ -10,6 +10,10 @@ async function envioMensagens(msgFrom, mensagem, isMostra, clientConectaWhatsApp
             isEnviaMensagem = false;
         }
     }
+	
+	console.log('servidorUsado',servidorUsado)
+	console.log('msgFrom',msgFrom)
+	console.log('mensagem',mensagem)
 
     if (isEnviaMensagem) {
         await clientConectaWhatsApp.sendMessage(msgFrom, mensagem);

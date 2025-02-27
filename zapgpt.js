@@ -236,7 +236,7 @@ clientConectaWhatsApp.on('qr', qr => {
 
 //Resposta de sucesso
 clientConectaWhatsApp.on('ready', () => {
-  console.log('Tudo certo! ZapGPT conectado.');
+  console.log('Tudo certo! ZapGPT conectado!!!');
 });
 
 //Inicializa o servidor
@@ -401,6 +401,18 @@ function readMap(numeroId) {
   return objeto;
 }
 
+function extrairNumero(str) {
+    return str.replace(/^55/, '').replace(/@c\.us$/, '');
+}
+
+function adicionarNove(numero) {
+    if (numero.length === 10) {
+        // Insere o "9" na terceira posição
+        return numero.slice(0, 2) + '9' + numero.slice(2);
+    }
+    return numero; // Retorna o número sem modificações se não tiver 10 caracteres
+}
+
 clientConectaWhatsApp.on('message', async msg => {
   const mensagemLivre = msg.body;
 
@@ -410,14 +422,47 @@ clientConectaWhatsApp.on('message', async msg => {
     mensagemLivre.toLowerCase().includes('Estou na tela do envio de código de autenticação via WhatsApp e tenho uma dúvida'.toLowerCase()))) {
 
     isResponde = false;
-
-    await delay(3000);
+	
+	await firebase.auth().signInWithEmailAndPassword(
+            "2719_4175@fotogeo.com.br",
+            "F2719_4175o"
+        );
+    
     await clientConectaWhatsApp.sendMessage(msg.from, `*FotoGeoIA:*\n\n${'Um momento por favor'}`);
+	await delay(3000);
+	
+	let numeroExtraido = extrairNumero(msg.from);
+	console.log('msg.from',msg.from);
+	console.log('numeroExtraido',numeroExtraido);
+	numeroExtraido = adicionarNove(numeroExtraido);
+	console.log('numeroExtraido depois',numeroExtraido);
 
-    reenvioSMS(firebase, msg.from, servidorUsado, SERVIDOR_LOCAL);
-    await delay(5000);
+    const db = firebase.database();
+    const ref = db.ref(`fotoGeo/validaWhats/${numeroExtraido}`);
+    ref.once('value', async function (data) {
+        const campo2 = data.val();
+		if (campo2!=null) {
+			console.log('campo WhatsApp',campo2.ultimoCodigoSMS)
+			
+			const ultimoCodigoSMS = campo2.ultimoCodigoSMS;
+			
+			if (ultimoCodigoSMS) {
+				await clientConectaWhatsApp.sendMessage(msg.from, `*FotoGeoIA:*\n\nO código de autenticação é:`);
+				await delay(3000);
+				
+				await clientConectaWhatsApp.sendMessage(msg.from, `*${ultimoCodigoSMS}*`);
+				
+				await delay(3000);				
+				await clientConectaWhatsApp.sendMessage(msg.from, `*FotoGeoIA:*\n\n${'Ajudo em algo mais?'}`);				
+			} else {
+				await clientConectaWhatsApp.sendMessage(msg.from, `*FotoGeoIA:*\n\n${'Não consegui gerar o código, em breve um humano vai lhe atender'}`);
+			}
+		} else {
+			await clientConectaWhatsApp.sendMessage(msg.from, `*FotoGeoIA:*\n\n${'Não encontrei seu telefone cadastrado, por isto não consegui gerar o código, em breve um humano vai lhe atender'}`);
+		}
+    });
 
-    await clientConectaWhatsApp.sendMessage(msg.from, `*FotoGeoIA:*\n\n${'Ajudo em algo mais?'}`);
+    
   }
   // msg.body !== null para ativar com qualquer coisa
   if (!existsDB(msg.from) &&
@@ -425,6 +470,7 @@ clientConectaWhatsApp.on('message', async msg => {
     (msg.body.toLowerCase() === "iniciar bot" ||
       msg.body.toLowerCase() == "Gostaria de tirar dúvidas a respeito do Aplicativo FotoGeo por este canal de atendimento".toLowerCase() ||
       msg.body.toLowerCase().includes("vim pelo site e gostaria de mais informações".toLowerCase()) ||
+	  msg.body.toLowerCase().includes("Vim pelo site e gostaria de tirar uma dúvida".toLowerCase()) ||
       msg.body.toLowerCase().includes("Estou com dúvidas em relação as minhas compras do FotoGeo".toLowerCase()) ||
       msg.body.toLowerCase().includes("Estou com dúvidas referente ao Aplicativo FotoGeo".toLowerCase()) ||
       msg.body.toLowerCase().includes("Dúvidas a respeito do Aplicativo Relatório FotoGEO".toLowerCase()) ||
@@ -432,7 +478,8 @@ clientConectaWhatsApp.on('message', async msg => {
       msg.body.toLowerCase().includes("Não estou conseguindo receber o código via WhatsApp. Gostaria de ajuda:".toLowerCase()) ||
       msg.body.toLowerCase().includes("Estou na tela do envio de código de autenticação via WhatsApp e tenho uma dúvida".toLowerCase()) ||
       msg.body.toLowerCase().includes("Estou gerando meu Relatório, mas estou tendo problemas".toLowerCase()) ||
-      msg.body.toLowerCase().includes("Estou tentando adquirir módulos do Aplicativo FotoGeo via PIX e não estou conseguindo".toLowerCase()) ||
+      msg.body.toLowerCase().includes("Estou tentando adquirir módulos do Aplicativo FotoGeo via PIX e não estou conseguindo".toLowerCase()) ||      
+	  msg.body.toLowerCase().includes("Estou na tela de tutoriais do site e tenho uma dúvida".toLowerCase()) ||	  
       msg.body.toLowerCase().includes("Recuperar Foto".toLowerCase()) ||
       msg.body.toLowerCase().includes("Foto Antiga".toLowerCase()) ||
       msg.body.toLowerCase().includes("Fotos Antigas".toLowerCase()) ||
@@ -484,9 +531,8 @@ clientConectaWhatsApp.on('message', async msg => {
         const chat = await msg.getChat();
         await chat.sendSeen();
         await chat.sendStateTyping();
-        await delay(3000); // Mudado aqui 3000
-        if (isResponde) {
-          // await clientConectaWhatsApp.sendMessage(msg.from, `*FotoGeoIA:*\n\n${readZAPGPT(msg.from).content}`);
+        await delay(1000); // Mudado aqui 3000
+        if (isResponde) {          
           await envioMensagens(msg.from, `*FotoGeoIA:*\n\n${readZAPGPT(msg.from).content}`, false, clientConectaWhatsApp, servidorUsado, SERVIDOR_LOCAL)
         }
         updateFlow(msg.from, 'stepGPT');
